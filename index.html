@@ -317,9 +317,8 @@
             const [hoursLogged, setHoursLogged] = React.useState('');
             const [sessionDate, setSessionDate] = React.useState(new Date().toISOString().substring(0, 10));
             const [newJobNameInput, setNewJobNameInput] = React.useState('');
-            const [newProductQuantity, setNewProductQuantity] = React.useState('');
+          
             
-
             // Effect to load data when the job changes
             React.useEffect(() => {
                 if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
@@ -651,6 +650,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
 
 </body>
 </html>
+
 
 
 
