@@ -1,439 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Field Job Tracker</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
-    
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 20px;
-        }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Field Job Tracker</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone@7/babel.min.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            padding: 20px;
+        }
 
-        #root {
-            max-width: 600px;
-            margin: 0 auto;
-            background-color: #ffffff;
-            padding: 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        }
+        #root {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
 
-        h1 {
-            color: #333;
-            text-align: center;
-            margin-bottom: 20px;
-            font-size: 1.8em;
-        }
+        h1 {
+            color: #333;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
 
-        h2 {
-            color: #555;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 5px;
-            margin-top: 25px;
-            font-size: 1.4em;
-        }
+        h2 {
+            color: #555;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 5px;
+            margin-top: 25px;
+            font-size: 1.4em;
+        }
 
-        label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-            color: #444;
-        }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+            color: #444;
+        }
 
-        select, input[type="text"], input[type="number"], input[type="date"] {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            box-sizing: border-box;
-            font-size: 1em;
-        }
+        select, input[type="text"], input[type="number"], input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-size: 1em;
+        }
 
-        button {
-            padding: 10px 15px;
-            margin-top: 10px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: bold;
-            transition: background-color 0.2s;
-            display: block;
-            width: 100%;
-            box-sizing: border-box;
-        }
+        button {
+            padding: 10px 15px;
+            margin-top: 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+        }
 
-        .add-product-btn {
-            background-color: #007bff;
-            color: white;
-            margin-bottom: 15px;
-        }
+        .add-product-btn {
+            background-color: #007bff;
+            color: white;
+            margin-bottom: 15px;
+        }
 
-        .add-product-btn:hover:not(:disabled) {
-            background-color: #0056b3;
-        }
+        .add-product-btn:hover:not(:disabled) {
+            background-color: #0056b3;
+        }
 
-        .log-hours-btn {
-            background-color: #28a745;
-            color: white;
-        }
+        .log-hours-btn {
+            background-color: #28a745;
+            color: white;
+        }
 
-        .log-hours-btn:hover:not(:disabled) {
-            background-color: #1e7e34;
-        }
+        .log-hours-btn:hover:not(:disabled) {
+            background-color: #1e7e34;
+        }
 
-        .add-photo-btn {
-            background-color: #ffc107;
-            color: #333;
-            margin-top: 5px;
-        }
+        .add-photo-btn {
+            background-color: #ffc107;
+            color: #333;
+            margin-top: 5px;
+        }
 
-        .add-photo-btn:hover:not(:disabled) {
-            background-color: #e0a800;
-        }
+        .add-photo-btn:hover:not(:disabled) {
+            background-color: #e0a800;
+        }
 
-        .save-progress-btn {
-            background-color: #17a2b8;
-            color: white;
-        }
+        .save-progress-btn {
+            background-color: #17a2b8;
+            color: white;
+        }
 
-        .save-progress-btn:hover:not(:disabled) {
-            background-color: #117a8b;
-        }
+        .save-progress-btn:hover:not(:disabled) {
+            background-color: #117a8b;
+        }
 
-        .finalize-btn {
-            background-color: #dc3545;
-            color: white;
-            margin-left: 10px; /* Separator for the two large buttons */
-        }
+        .finalize-btn {
+            background-color: #dc3545;
+            color: white;
+            margin-left: 10px; /* Separator for the two large buttons */
+        }
 
-        .finalize-btn:hover:not(:disabled) {
-            background-color: #c82333;
-        }
+        .finalize-btn:hover:not(:disabled) {
+            background-color: #c82333;
+        }
 
-        button:disabled {
-            background-color: #ccc;
-            cursor: not-allowed;
-        }
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
 
-        .product-list, .session-list {
-            list-style: none;
-            padding: 0;
-            margin-top: 10px;
-        }
+        .product-list, .session-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 10px;
+        }
 
-        .product-list li, .session-list li {
-            background-color: #fafafa;
-            border: 1px solid #eee;
-            padding: 10px;
-            margin-bottom: 8px;
-            border-radius: 6px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .product-list li, .session-list li {
+            background-color: #fafafa;
+            border: 1px solid #eee;
+            padding: 10px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-        .product-item-details {
-            flex-grow: 1;
-        }
+        .product-item-details {
+            flex-grow: 1;
+        }
 
-        .remove-btn {
-            background: none;
-            color: #dc3545;
-            border: 1px solid #dc3545;
-            padding: 5px 10px;
-            margin-top: 0;
-            margin-left: 10px;
-            width: auto;
-        }
+        .remove-btn {
+            background: none;
+            color: #dc3545;
+            border: 1px solid #dc3545;
+            padding: 5px 10px;
+            margin-top: 0;
+            margin-left: 10px;
+            width: auto;
+        }
 
-        .remove-btn:hover {
-            background-color: #f8d7da;
-        }
+        .remove-btn:hover {
+            background-color: #f8d7da;
+        }
 
-        .summary-box {
-            background-color: #e9ecef;
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-        }
+        .summary-box {
+            background-color: #e9ecef;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
 
-        .summary-box p {
-            margin: 5px 0;
-            font-size: 1.1em;
-            color: #333;
-        }
+        .summary-box p {
+            margin: 5px 0;
+            font-size: 1.1em;
+            color: #333;
+        }
 
-        .save-buttons-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
+        .save-buttons-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
 
-        .save-buttons-container button {
-            flex: 1;
-        }
-        
-        /* Mobile layout adjustment */
-        @media (max-width: 450px) {
-            .save-buttons-container {
-                flex-direction: column;
-            }
+        .save-buttons-container button {
+            flex: 1;
+        }
+        
+        /* Mobile layout adjustment */
+        @media (max-width: 450px) {
+            .save-buttons-container {
+                flex-direction: column;
+            }
 
-            .finalize-btn {
-                margin-left: 0;
-                margin-top: 10px;
-            }
-        }
-    </style>
+            .finalize-btn {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
+    </style>
 </head>
 
 <body>
-    <div id="root"></div>
+    <div id="root"></div>
 
-    <script type="text/babel">
-        // Static data structures
-        const STATIC_JOB_OPTIONS = [
-            { name: "--- Select a Job ---", key: "default", value: null },
-            { name: "Acme Office Renovation", key: "acme", value: "Acme Office Renovation" },
-            { name: "Riverside Home Build", key: "riverside", value: "Riverside Home Build" },
-            { name: "New Client Job...", key: "new", value: "" }, 
-        ];
-
-       const STATIC_PRODUCTS = [
-            // --- NEW KAYCAN VINYL PRODUCTS ---
-            { id: 201, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Avanti", length: "10 ft" },
-            { id: 202, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Elegance D5DL", length: "12 ft" },
-            { id: 203, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten standard", length: "10 ft" },
-            { id: 204, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten white", length: "10 ft" },
-            { id: 205, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ", length: "12 ft" },
-            { id: 206, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ Wideface", length: "12 ft" },
-            { id: 207, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal OSCP", length: "10 ft" },
-            { id: 208, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal ISCP", length: "10 ft" },
-            { id: 209, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Vinyl Starter Strip", length: "12 ft" },
-            { id: 210, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Drip Cap", length: "12 ft" },
-
-            // --- NEW KAYCAN ALUMINUM PRODUCTS ---
-            { id: 211, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Quad 4 Full Vented", length: "12 ft" },
-            { id: 212, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Plain Soffit", length: "12 ft" },
-            { id: 213, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Vented Soffit", length: "12 ft" },
-            { id: 214, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Plain Soffit", length: "12 ft" },
-            { id: 215, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Vented Soffit", length: "12 ft" },
-            { id: 216, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "6\" Fascia", length: "12 ft" },
-            { id: 217, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "8\" Fascia", length: "12 ft" },
-            { id: 218, type: "Trim", manufacturer: "Kaycan - Aluminum", product: "3/8\" AJ", length: "12 ft" },
-            { id: 219, type: "Coil", manufacturer: "Kaycan - Aluminum", product: "Flatstock coil", length: "50 ft" },
-            { id: 220, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Trough", length: "10 ft" },
-            { id: 221, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Pipestrap", length: "N/A" },
-            { id: 222, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Downpipe 3\"", length: "10 ft" },
-            { id: 223, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Elbow 3\"", length: "N/A" },
-            { id: 224, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Endcaps", length: "N/A" },
-            { id: 225, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Inside Mitres", length: "N/A" },
-            { id: 226, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Outside Mitres", length: "N/A" },
-            { id: 227, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "4' Leafguard", length: "4 ft" },
-            { id: 228, type: "Sealant", manufacturer: "Kaycan - Aluminum", product: "Tremco Caulking", length: "N/A" },
-
-            // --- MITTEN PRODUCTS ---
-            { id: 101, type: "Siding", manufacturer: "Mitten", product: "Sentry D4H", length: "12 ft" },
-            { id: 102, type: "Siding", manufacturer: "Mitten", product: "Sentry D4.5DL", length: "12 ft" },
-            { id: 103, type: "Siding", manufacturer: "Mitten", product: "Sentry Board & Batten", length: "10 ft" },
-            { id: 104, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 5/8 v J", length: "12 ft" },
-            { id: 105, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 7/8 v J", length: "12 ft" },
-            { id: 106, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal 3\" OSCP", length: "12 ft" }, 
-            { id: 107, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal ISCP", length: "12 ft" }, 
-            { id: 108, type: "Trim/Starter", manufacturer: "Mitten", product: "Universal Htrim", length: "12 ft" },
-            { id: 109, type: "Soffit", manufacturer: "Mitten", product: "D5 Vertical Soffit", length: "12 ft" },
-            { id: 110, type: "Soffit", manufacturer: "Mitten", product: "D5 Full Vent Perforated", length: "12 ft" },
-            { id: 111, type: "Block", manufacturer: "Mitten", product: "Light JBlock", length: "N/A" },
-            { id: 112, type: "Block", manufacturer: "Mitten", product: "Recessed split JBlock(elec)", length: "N/A" },
-            { id: 113, type: "Vent", manufacturer: "Mitten", product: "6\" hooded exhaust vent", length: "N/A" },
-            { id: 114, type: "Vent", manufacturer: "Mitten", product: "6\" louvered exhaust vent", length: "N/A" },
-            { id: 115, type: "Vent", manufacturer: "Mitten", product: "4\" hooded dryer vent", length: "N/A" },
-            { id: 116, type: "Vent", manufacturer: "Mitten", product: "4\" louvered dryer vent", length: "N/A" },
-            { id: 117, type: "Vent", manufacturer: "Mitten", product: "22\" Octagon Gable Vent", length: "N/A" },
-            { id: 118, type: "Vent", manufacturer: "Mitten", product: "18\" octagon gable vent", length: "N/A" },
-            { id: 119, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Split Shakes", length: "10 ft" },
-            { id: 120, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shakes Corner", length: "N/A" },
-            { id: 121, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Weathered Staggered Shakes", length: "10 ft" },
-            { id: 122, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shake Corner Kit", length: "N/A" },
-            { id: 123, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry Weathered 7\" Shake Corner Kit", length: "N/A" },
-            { id: 124, type: "Siding", manufacturer: "Mitten", product: "Rustic D4.5DL", length: "12 ft" },
-            { id: 125, type: "Siding", manufacturer: "Mitten", product: "Rustic BB", length: "10 ft" },
-            { id: 126, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic ISCP", length: "10 ft" },
-            { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
-            { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
-        ];
-    
-        
-        // Utility to manage Local Storage
-        const loadJobData = (jobName) => {
-            const data = localStorage.getItem(`jobData_${jobName}`);
-            return data ? JSON.parse(data) : { products: [], sessions: [], photoLink: '' };
-        };
-
-        const saveJobData = (jobName, products, sessions, photoLink) => {
-            const data = JSON.stringify({ products, sessions, photoLink });
-            localStorage.setItem(`jobData_${jobName}`, data);
-        };
-
-        const clearJobData = (jobName) => {
-            localStorage.removeItem(`jobData_${jobName}`);
-            const savedJobs = JSON.parse(localStorage.getItem('savedJobs') || '[]');
-            const updatedJobs = savedJobs.filter(name => name !== jobName);
-            localStorage.setItem('savedJobs', JSON.stringify(updatedJobs));
+    <script type="text/babel">
+        // Utility to get today's date in YYYY-MM-DD format
+        const getTodayDate = () => {
+            const today = new Date();
+            const yyyy = today.getFullYear();
+            const mm = String(today.getMonth() + 1).padStart(2, '0'); // Months start at 0
+            const dd = String(today.getDate()).padStart(2, '0');
+            return `${yyyy}-${mm}-${dd}`;
         };
         
-        const loadSavedJobNames = () => {
-            return JSON.parse(localStorage.getItem('savedJobs') || '[]');
-        };
+        // Static data structures
+        const STATIC_JOB_OPTIONS = [
+            { name: "--- Select a Job ---", key: "default", value: null },
+            { name: "Acme Office Renovation", key: "acme", value: "Acme Office Renovation" },
+            { name: "Riverside Home Build", key: "riverside", value: "Riverside Home Build" },
+            { name: "New Client Job...", key: "new", value: "New Client Job..." },  // Value should match the name if it's not null
+        ];
 
-        const saveNewJobName = (jobName) => {
-            const savedJobs = loadSavedJobNames();
-            if (!savedJobs.includes(jobName)) {
-                const newSavedJobs = [...savedJobs, jobName].sort();
-                localStorage.setItem('savedJobs', JSON.stringify(newSavedJobs));
-            }
-        };
+       const STATIC_PRODUCTS = [
+            // --- NEW KAYCAN VINYL PRODUCTS ---
+            { id: 201, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Avanti", length: "10 ft" },
+            { id: 202, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Elegance D5DL", length: "12 ft" },
+            { id: 203, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten standard", length: "10 ft" },
+            { id: 204, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten white", length: "10 ft" },
+            { id: 205, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ", length: "12 ft" },
+            { id: 206, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ Wideface", length: "12 ft" },
+            { id: 207, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal OSCP", length: "10 ft" },
+            { id: 208, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal ISCP", length: "10 ft" },
+            { id: 209, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Vinyl Starter Strip", length: "12 ft" },
+            { id: 210, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Drip Cap", length: "12 ft" },
+
+            // --- NEW KAYCAN ALUMINUM PRODUCTS ---
+            { id: 211, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Quad 4 Full Vented", length: "12 ft" },
+            { id: 212, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Plain Soffit", length: "12 ft" },
+            { id: 213, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Vented Soffit", length: "12 ft" },
+            { id: 214, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Plain Soffit", length: "12 ft" },
+            { id: 215, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Vented Soffit", length: "12 ft" },
+            { id: 216, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "6\" Fascia", length: "12 ft" },
+            { id: 217, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "8\" Fascia", length: "12 ft" },
+            { id: 218, type: "Trim", manufacturer: "Kaycan - Aluminum", product: "3/8\" AJ", length: "12 ft" },
+            { id: 219, type: "Coil", manufacturer: "Kaycan - Aluminum", product: "Flatstock coil", length: "50 ft" },
+            { id: 220, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Trough", length: "10 ft" },
+            { id: 221, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Pipestrap", length: "N/A" },
+            { id: 222, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Downpipe 3\"", length: "10 ft" },
+            { id: 223, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Elbow 3\"", length: "N/A" },
+            { id: 224, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Endcaps", length: "N/A" },
+            { id: 225, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Inside Mitres", length: "N/A" },
+            { id: 226, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Outside Mitres", length: "N/A" },
+            { id: 227, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "4' Leafguard", length: "4 ft" },
+            { id: 228, type: "Sealant", manufacturer: "Kaycan - Aluminum", product: "Tremco Caulking", length: "N/A" },
+
+            // --- MITTEN PRODUCTS ---
+            { id: 101, type: "Siding", manufacturer: "Mitten", product: "Sentry D4H", length: "12 ft" },
+            { id: 102, type: "Siding", manufacturer: "Mitten", product: "Sentry D4.5DL", length: "12 ft" },
+            { id: 103, type: "Siding", manufacturer: "Mitten", product: "Sentry Board & Batten", length: "10 ft" },
+            { id: 104, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 5/8 v J", length: "12 ft" },
+            { id: 105, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 7/8 v J", length: "12 ft" },
+            { id: 106, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal 3\" OSCP", length: "12 ft" }, 
+            { id: 107, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal ISCP", length: "12 ft" }, 
+            { id: 108, type: "Trim/Starter", manufacturer: "Mitten", product: "Universal Htrim", length: "12 ft" },
+            { id: 109, type: "Soffit", manufacturer: "Mitten", product: "D5 Vertical Soffit", length: "12 ft" },
+            { id: 110, type: "Soffit", manufacturer: "Mitten", product: "D5 Full Vent Perforated", length: "12 ft" },
+            { id: 111, type: "Block", manufacturer: "Mitten", product: "Light JBlock", length: "N/A" },
+            { id: 112, type: "Block", manufacturer: "Mitten", product: "Recessed split JBlock(elec)", length: "N/A" },
+            { id: 113, type: "Vent", manufacturer: "Mitten", product: "6\" hooded exhaust vent", length: "N/A" },
+            { id: 114, type: "Vent", manufacturer: "Mitten", product: "6\" louvered exhaust vent", length: "N/A" },
+            { id: 115, type: "Vent", manufacturer: "Mitten", product: "4\" hooded dryer vent", length: "N/A" },
+            { id: 116, type: "Vent", manufacturer: "Mitten", product: "4\" louvered dryer vent", length: "N/A" },
+            { id: 117, type: "Vent", manufacturer: "Mitten", product: "22\" Octagon Gable Vent", length: "N/A" },
+            { id: 118, type: "Vent", manufacturer: "Mitten", product: "18\" octagon gable vent", length: "N/A" },
+            { id: 119, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Split Shakes", length: "10 ft" },
+            { id: 120, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shakes Corner", length: "N/A" },
+            { id: 121, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Weathered Staggered Shakes", length: "10 ft" },
+            { id: 122, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shake Corner Kit", length: "N/A" },
+            { id: 123, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry Weathered 7\" Shake Corner Kit", length: "N/A" },
+            { id: 124, type: "Siding", manufacturer: "Mitten", product: "Rustic D4.5DL", length: "12 ft" },
+            { id: 125, type: "Siding", manufacturer: "Mitten", product: "Rustic BB", length: "10 ft" },
+            { id: 126, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic ISCP", length: "10 ft" },
+            { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
+            { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
+        ];
+    
+        
+        // Utility to manage Local Storage
+        const loadJobData = (jobName) => {
+            const data = localStorage.getItem(`jobData_${jobName}`);
+            return data ? JSON.parse(data) : { products: [], sessions: [], photoLink: '' };
+        };
+
+        const saveJobData = (jobName, products, sessions, photoLink) => {
+            const data = JSON.stringify({ products, sessions, photoLink });
+            localStorage.setItem(`jobData_${jobName}`, data);
+        };
+
+        const clearJobData = (jobName) => {
+            localStorage.removeItem(`jobData_${jobName}`);
+            const savedJobs = JSON.parse(localStorage.getItem('savedJobs') || '[]');
+            const updatedJobs = savedJobs.filter(name => name !== jobName);
+            localStorage.setItem('savedJobs', JSON.stringify(updatedJobs));
+        };
+        
+        const loadSavedJobNames = () => {
+            return JSON.parse(localStorage.getItem('savedJobs') || '[]');
+        };
+
+        const saveNewJobName = (jobName) => {
+            const savedJobs = loadSavedJobNames();
+            if (!savedJobs.includes(jobName)) {
+                const newSavedJobs = [...savedJobs, jobName].sort();
+                localStorage.setItem('savedJobs', JSON.stringify(newSavedJobs));
+            }
+        };
 
 
-        const JobTrackerApp = () => {
-            const [savedJobNames, setSavedJobNames] = React.useState(loadSavedJobNames);
-            const initialJobName = STATIC_JOB_OPTIONS[0].name;
-            const [currentJob, setCurrentJob] = React.useState({ name: initialJobName, isNew: false });
-            const [productsUsed, setProductsUsed] = React.useState([]);
-            const [loggedSessions, setLoggedSessions] = React.useState([]);
-            const [photoLink, setPhotoLink] = React.useState('');
+        const JobTrackerApp = () => {
+            const [savedJobNames, setSavedJobNames] = React.useState(loadSavedJobNames);
+            const initialJobName = STATIC_JOB_OPTIONS[0].name;
+            const [currentJob, setCurrentJob] = React.useState({ name: initialJobName, isNew: false });
+            const [productsUsed, setProductsUsed] = React.useState([]);
+            const [loggedSessions, setLoggedSessions] = React.useState([]);
+            const [photoLink, setPhotoLink] = React.useState('');
 
-          // Form state
-const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
-const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
-const [newProductQuantity, setNewProductQuantity] = React.useState(''); // <--- THIS WAS MISSING
-const [hoursLogged, setHoursLogged] = React.useState('');
-            
-            // Effect to load data when the job changes
-            React.useEffect(() => {
-                if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
-                    const { products, sessions, photoLink } = loadJobData(currentJob.name);
-                    setProductsUsed(products);
-                    setLoggedSessions(sessions);
-                    setPhotoLink(photoLink);
-                } else {
-                    setProductsUsed([]);
-                    setLoggedSessions([]);
-                    setPhotoLink('');
-                }
-            }, [currentJob.name]);
+          // Form state (CORRECTIONS APPLIED HERE)
+            const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
+            const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
+            const [newProductQuantity, setNewProductQuantity] = React.useState(''); 
+            const [hoursLogged, setHoursLogged] = React.useState('');
+            const [newJobNameInput, setNewJobNameInput] = React.useState(''); // <--- ADDED MISSING STATE
+            const [sessionDate, setSessionDate] = React.useState(getTodayDate()); // <--- ADDED MISSING STATE & INITIAL VALUE
+            
+            // Effect to load data when the job changes
+            React.useEffect(() => {
+                if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
+                    const { products, sessions, photoLink } = loadJobData(currentJob.name);
+                    setProductsUsed(products);
+                    setLoggedSessions(sessions);
+                    setPhotoLink(photoLink);
+                } else {
+                    setProductsUsed([]);
+                    setLoggedSessions([]);
+                    setPhotoLink('');
+                }
+            }, [currentJob.name]);
 
-            // Save data automatically on state change
-            React.useEffect(() => {
-                if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
-                    saveJobData(currentJob.name, productsUsed, loggedSessions, photoLink);
-                    saveNewJobName(currentJob.name);
-                    setSavedJobNames(loadSavedJobNames());
-                }
-            }, [productsUsed, loggedSessions, photoLink]);
+            // Save data automatically on state change
+            React.useEffect(() => {
+                if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
+                    saveJobData(currentJob.name, productsUsed, loggedSessions, photoLink);
+                    saveNewJobName(currentJob.name);
+                    setSavedJobNames(loadSavedJobNames());
+                }
+            }, [productsUsed, loggedSessions, photoLink, currentJob.name]); // Added currentJob.name to dependency array for clarity
 
 
-            const handleJobChange = (event) => {
-                const selectedName = event.target.value;
-                const isNew = selectedName === STATIC_JOB_OPTIONS.find(o => o.key === 'new').name;
-                
-                if (isNew) {
-                    setCurrentJob({ name: '', isNew: true });
-                    setNewJobNameInput('');
-                } else {
-                    setCurrentJob({ name: selectedName, isNew: false });
-                }
-            };
-            
-            const handleNewJobCreation = () => {
-                if (newJobNameInput.trim() === "") {
-                    alert("Please enter a name for the new job.");
-                    return;
-                }
-                const newJobName = newJobNameInput.trim();
-                saveNewJobName(newJobName); 
-                setCurrentJob({ name: newJobName, isNew: false }); 
-                setNewJobNameInput('');
-            };
+            const handleJobChange = (event) => {
+                const selectedValue = event.target.value;
+                const newJobOption = STATIC_JOB_OPTIONS.find(o => o.key === 'new');
+                
+                if (selectedValue === newJobOption.value) {
+                    setCurrentJob({ name: '', isNew: true });
+                    setNewJobNameInput('');
+                } else {
+                    setCurrentJob({ name: selectedValue, isNew: false });
+                }
+            };
+            
+            const handleNewJobCreation = () => {
+                if (newJobNameInput.trim() === "") {
+                    alert("Please enter a name for the new job.");
+                    return;
+                }
+                const newJobName = newJobNameInput.trim();
+                saveNewJobName(newJobName); 
+                setCurrentJob({ name: newJobName, isNew: false }); 
+                setNewJobNameInput('');
+            };
 
-          const handleAddProduct = () => {
-                const quantity = parseFloat(newProductQuantity);
+          const handleAddProduct = () => {
+                const quantity = parseFloat(newProductQuantity);
 
-                if (isNaN(quantity) || quantity <= 0) {
-                    alert("Please enter a valid quantity for the product.");
-                    return;
-                }
+                if (isNaN(quantity) || quantity <= 0) {
+                    alert("Please enter a valid quantity for the product.");
+                    return;
+                }
 
-                const productMatch = STATIC_PRODUCTS.find(p => p.manufacturer === newProductManufacturer && p.product === newProductModel);
-                if (!productMatch) return; 
+                const productMatch = STATIC_PRODUCTS.find(p => p.manufacturer === newProductManufacturer && p.product === newProductModel);
+                if (!productMatch) return; 
 
-                // Determine the unit based on the 'length' field
-                let unit = 'pieces'; 
-                if (productMatch.length.toLowerCase().includes('ft') || productMatch.length.toLowerCase().includes('feet')) {
-                    unit = 'feet';
-                } else if (productMatch.length.toLowerCase() === 'n/a') {
-                    unit = 'pieces'; 
-                }
+                // Determine the unit based on the 'length' field
+                let unit = 'pieces'; 
+                if (productMatch.length.toLowerCase().includes('ft') || productMatch.length.toLowerCase().includes('feet')) {
+                    unit = 'feet';
+                } else if (productMatch.length.toLowerCase() === 'n/a') {
+                    unit = 'pieces'; 
+                }
 
-                const newProduct = {
-                    id: Date.now(),
-                    type: productMatch.type,
-                    manufacturer: productMatch.manufacturer,
-                    product: productMatch.product,
-                    length: productMatch.length,
-                    quantity: quantity, // <-- ADDED
-                    unit: unit,        // <-- ADDED
-                };
-                setProductsUsed(prev => [...prev, newProduct]);
-                
-                setNewProductQuantity(''); // <-- ADDED
-        
-            };
+                const newProduct = {
+                    id: Date.now(),
+                    type: productMatch.type,
+                    manufacturer: productMatch.manufacturer,
+                    product: productMatch.product,
+                    length: productMatch.length,
+                    quantity: quantity, 
+                    unit: unit,        
+                };
+                setProductsUsed(prev => [...prev, newProduct]);
+                
+                setNewProductQuantity(''); 
+        
+            };
 
-            const handleRemoveProduct = (id) => {
-                setProductsUsed(productsUsed.filter(p => p.id !== id));
-            };
+            const handleRemoveProduct = (id) => {
+                setProductsUsed(productsUsed.filter(p => p.id !== id));
+            };
 
-            const handleLogHours = () => {
-                const hours = parseFloat(hoursLogged);
-                if (isNaN(hours) || hours <= 0) {
-                    alert("Please enter a valid number of hours.");
-                    return;
-                }
+            const handleLogHours = () => {
+                const hours = parseFloat(hoursLogged);
+                if (isNaN(hours) || hours <= 0) {
+                    alert("Please enter a valid number of hours.");
+                    return;
+                }
 
-                const newSession = {
-                    hours: hours,
-                    date: sessionDate,
-                    id: Date.now(),
-                };
+                const newSession = {
+                    hours: hours,
+                    date: sessionDate, // This now correctly uses the state variable
+                    id: Date.now(),
+                };
 
-                setLoggedSessions(prev => [...prev, newSession]);
-                setHoursLogged('');
-            };
+                setLoggedSessions(prev => [...prev, newSession]);
+                setHoursLogged('');
+            };
 
-            const handleAddPhotoLink = () => {
-                const link = prompt("Enter photo album link (e.g., Google Photos, Dropbox):", photoLink);
-                if (link !== null) {
-                    setPhotoLink(link);
-                }
-            };
+            const handleAddPhotoLink = () => {
+                const link = prompt("Enter photo album link (e.g., Google Photos, Dropbox):", photoLink);
+                if (link !== null) {
+                    setPhotoLink(link);
+                }
+            };
 
-            const handleSaveProgress = () => {
-                saveJobData(currentJob.name, productsUsed, loggedSessions, photoLink);
-                alert(`💾 Progress saved for ${currentJob.name}!`);
-            };
+            const handleSaveProgress = () => {
+                saveJobData(currentJob.name, productsUsed, loggedSessions, photoLink);
+                alert(`💾 Progress saved for ${currentJob.name}!`);
+            };
 
-            const handleFinalizeAndSend = () => {
-                const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
-                const report = `
+            const handleFinalizeAndSend = () => {
+                const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
+                const report = `
 Job Report for: ${currentJob.name}
 
 --- Summary ---
@@ -442,237 +453,236 @@ Unique Products Used: ${productsUsed.length}
 Photo Link: ${photoLink || 'N/A'}
 
 --- Products Used ---
-${productsUsed.map(p => `- ${p.type}: ${p.manufacturer} ${p.product} (${p.length})`).join('\n')}
+${productsUsed.map(p => `- ${p.type}: ${p.manufacturer} ${p.product} (${p.quantity} ${p.unit})`).join('\n')}
 
 --- Sessions Logged ---
 ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')}
-                `;
+                `;
 
-                // Show alert with full report for easy copying to email/text
-                alert("--- FINALIZE & SEND REPORT ---\n\n" + report);
+                // Show alert with full report for easy copying to email/text
+                alert("--- FINALIZE & SEND REPORT ---\n\n" + report);
 
-                // Clear data after finalizing
-                const confirmClear = confirm("Report contents copied. Do you want to CLEAR the job data (hours, products, link) for this job now?");
-                if (confirmClear) {
-                    clearJobData(currentJob.name);
-                    setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
-                    alert(`✅ Data for ${currentJob.name} has been cleared and the job has been reset.`);
-                }
-            };
+                // Clear data after finalizing
+                const confirmClear = confirm("Report contents copied. Do you want to CLEAR the job data (hours, products, link) for this job now?");
+                if (confirmClear) {
+                    clearJobData(currentJob.name);
+                    setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
+                    alert(`✅ Data for ${currentJob.name} has been cleared and the job has been reset.`);
+                }
+            };
 
-            const allJobOptions = [...STATIC_JOB_OPTIONS.filter(o => o.key !== 'new'), 
-                                   ...savedJobNames.filter(name => !STATIC_JOB_OPTIONS.some(o => o.name === name)).map(name => ({ name, key: name, value: name })),
-                                   STATIC_JOB_OPTIONS.find(o => o.key === 'new')];
-            
+            const allJobOptions = [...STATIC_JOB_OPTIONS.filter(o => o.key !== 'new'), 
+                                   ...savedJobNames.filter(name => !STATIC_JOB_OPTIONS.some(o => o.name === name)).map(name => ({ name, key: name, value: name })),
+                                   STATIC_JOB_OPTIONS.find(o => o.key === 'new')];
+            
 
-            const allManufacturers = Array.from(new Set(STATIC_PRODUCTS.map(p => p.manufacturer)));
-            const availableModels = STATIC_PRODUCTS.filter(p => p.manufacturer === newProductManufacturer);
-            
-            // Render logic
-            if (currentJob.isNew) {
-                // New Job Creation View
-                return (
-                    <div>
-                        <h1>New Job Setup</h1>
-                        <label htmlFor="newJobNameInput">Enter New Job Name</label>
-                        <input
-                            type="text"
-                            id="newJobNameInput"
-                            value={newJobNameInput}
-                            onChange={(e) => setNewJobNameInput(e.target.value)}
-                            placeholder="e.g., Smith Residence Deck Build"
-                        />
-                        <button className="add-product-btn" onClick={handleNewJobCreation} style={{ marginTop: '20px' }}>
-                            ➕ CREATE JOB
-                        </button>
-                        <button onClick={() => setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false })}>
-                            ↩️ Cancel
-                        </button>
-                    </div>
-                );
-            }
+            const allManufacturers = Array.from(new Set(STATIC_PRODUCTS.map(p => p.manufacturer)));
+            const availableModels = STATIC_PRODUCTS.filter(p => p.manufacturer === newProductManufacturer);
+            
+            // Render logic
+            if (currentJob.isNew) {
+                // New Job Creation View
+                return (
+                    <div>
+                        <h1>New Job Setup</h1>
+                        <label htmlFor="newJobNameInput">Enter New Job Name</label>
+                        <input
+                            type="text"
+                            id="newJobNameInput"
+                            value={newJobNameInput}
+                            onChange={(e) => setNewJobNameInput(e.target.value)}
+                            placeholder="e.g., Smith Residence Deck Build"
+                        />
+                        <button className="add-product-btn" onClick={handleNewJobCreation} style={{ marginTop: '20px' }}>
+                            ➕ CREATE JOB
+                        </button>
+                        <button onClick={() => setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false })}>
+                            ↩️ Cancel
+                        </button>
+                    </div>
+                );
+            }
 
-            return (
-                <div>
-                    <h1>Field Job Tracker</h1>
+            return (
+                <div>
+                    <h1>Field Job Tracker</h1>
 
-                    {/* --- JOB SELECTION --- */}
-                    <label htmlFor="job-select">Select Job</label>
-                    <select id="job-select" value={currentJob.name} onChange={handleJobChange}>
+                    {/* --- JOB SELECTION --- */}
+                    <label htmlFor="job-select">Select Job</label>
+                    <select id="job-select" value={currentJob.name} onChange={handleJobChange}>
                         {allJobOptions.map((option, index) => (
-                            <option key={option.key || index} value={option.value || option.name}>
-                                {option.name}
-                            </option>
-                        ))}
-                    </select>
+                            <option key={option.key || index} value={option.value || option.name}>
+                                {option.name}
+                            </option>
+                        ))}
+                    </select>
 
-                    {currentJob.name === STATIC_JOB_OPTIONS[0].name && (
-                        <p style={{ marginTop: '15px', color: '#dc3545', fontWeight: 'bold', textAlign: 'center' }}>
-                            Please select or create a job to begin tracking.
-                        </p>
-                    )}
+                    {currentJob.name === STATIC_JOB_OPTIONS[0].name && (
+                        <p style={{ marginTop: '15px', color: '#dc3545', fontWeight: 'bold', textAlign: 'center' }}>
+                            Please select or create a job to begin tracking.
+                        </p>
+                    )}
 
-                    {/* --- PRODUCT TRACKING --- */}
-                    <h2>🔨 Products Used</h2>
-                    <div className="product-form" style={{ opacity: currentJob.name === STATIC_JOB_OPTIONS[0].name ? 0.5 : 1 }}>
-                        <label htmlFor="manufacturer-select">Manufacturer</label>
-                        <select
-                            id="manufacturer-select"
-                            value={newProductManufacturer}
-                            onChange={(e) => setNewProductManufacturer(e.target.value)}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            {allManufacturers.map((m) => (
-                                <option key={m} value={m}>{m}</option>
-                            ))}
-                        </select>
+                    {/* --- PRODUCT TRACKING --- */}
+                    <h2>🔨 Products Used</h2>
+                    <div className="product-form" style={{ opacity: currentJob.name === STATIC_JOB_OPTIONS[0].name ? 0.5 : 1 }}>
+                        <label htmlFor="manufacturer-select">Manufacturer</label>
+                        <select
+                            id="manufacturer-select"
+                            value={newProductManufacturer}
+                            onChange={(e) => {
+                                setNewProductManufacturer(e.target.value);
+                                // Reset model to the first option of the new manufacturer
+                                const firstModel = STATIC_PRODUCTS.find(p => p.manufacturer === e.target.value);
+                                if (firstModel) {
+                                    setNewProductModel(firstModel.product);
+                                }
+                            }}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        >
+                            {allManufacturers.map((m) => (
+                                <option key={m} value={m}>{m}</option>
+                            ))}
+                        </select>
 
-                        <label htmlFor="model-select">Model/Product</label>
-                        <select
-                            id="model-select"
-                            value={newProductModel}
-                            onChange={(e) => setNewProductModel(e.target.value)}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            {availableModels.map((p) => (
-                                <option key={p.id} value={p.product}>{`${p.product} (${p.type})`}</option>
-                            ))}
-                        </select>
-                        <label htmlFor="product-quantity-input">Quantity Used (Feet, Pieces, etc.)</label>
+                        <label htmlFor="model-select">Model/Product</label>
+                        <select
+                            id="model-select"
+                            value={newProductModel}
+                            onChange={(e) => setNewProductModel(e.target.value)}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        >
+                            {availableModels.map((p) => (
+                                <option key={p.id} value={p.product}>{`${p.product} (${p.type})`}</option>
+                            ))}
+                        </select>
+                        <label htmlFor="product-quantity-input">Quantity Used (Feet, Pieces, etc.)</label>
 <input
-    id="product-quantity-input"
-    type="number"
-    value={newProductQuantity}
-    onChange={(e) => setNewProductQuantity(e.target.value)}
-    placeholder="e.g., 200 or 12"
-    min="1"
-    disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+    id="product-quantity-input"
+    type="number"
+    value={newProductQuantity}
+    onChange={(e) => setNewProductQuantity(e.target.value)}
+    placeholder="e.g., 200 or 12"
+    min="1"
+    disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
 />
 
-                        <button 
-                            className="add-product-btn" 
-                            onClick={handleAddProduct}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            ➕ ADD PRODUCT TO LIST
-                        </button>
-                    </div>
+                        <button 
+                            className="add-product-btn" 
+                            onClick={handleAddProduct}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        >
+                            ➕ ADD PRODUCT TO LIST
+                        </button>
+                    </div>
 
-                    <ul className="product-list">
-                        {productsUsed.map((product) => (
-                            <li key={product.id}>
-                                <div className="product-item-details">
-                                    <strong>{product.manufacturer} {product.product}</strong> ({product.quantity} {product.unit})
-                                    <br/>
-                                    <small>{product.type} ({product.length})</small>
-                                </div>
-                                <button className="remove-btn" onClick={() => handleRemoveProduct(product.id)}>
-                                    &times; Remove
-                                </button>
-                            </li>
-                        ))}
-                    </ul>
-                    {productsUsed.length === 0 && currentJob.name !== STATIC_JOB_OPTIONS[0].name && (
-                         <p>No products logged yet.</p>
-                    )}
+                    <ul className="product-list">
+                        {productsUsed.map((product) => (
+                            <li key={product.id}>
+                                <div className="product-item-details">
+                                    <strong>{product.manufacturer} {product.product}</strong> ({product.quantity} {product.unit})
+                                    <br/>
+                                    <small>{product.type} ({product.length})</small>
+                                </div>
+                                <button className="remove-btn" onClick={() => handleRemoveProduct(product.id)}>
+                                    &times; Remove
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                    {productsUsed.length === 0 && currentJob.name !== STATIC_JOB_OPTIONS[0].name && (
+                         <p>No products logged yet.</p>
+                    )}
 
-                    {/* --- HOURS TRACKING --- */}
-                    <h2>⏱️ Time & Photos</h2>
-                    <div className="hours-form" style={{ opacity: currentJob.name === STATIC_JOB_OPTIONS[0].name ? 0.5 : 1 }}>
-                        <label htmlFor="hours-input">Hours Worked</label>
-                        <input
-                            id="hours-input"
-                            type="number"
-                            value={hoursLogged}
-                            onChange={(e) => setHoursLogged(e.target.value)}
-                            placeholder="e.g., 8.5"
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        />
+                    {/* --- HOURS TRACKING --- */}
+                    <h2>⏱️ Time & Photos</h2>
+                    <div className="hours-form" style={{ opacity: currentJob.name === STATIC_JOB_OPTIONS[0].name ? 0.5 : 1 }}>
+                        <label htmlFor="hours-input">Hours Worked</label>
+                        <input
+                            id="hours-input"
+                            type="number"
+                            value={hoursLogged}
+                            onChange={(e) => setHoursLogged(e.target.value)}
+                            placeholder="e.g., 8.5"
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        />
 
-                        <label htmlFor="date-input">Date</label>
-                        <input
-                            id="date-input"
-                            type="date"
-                            value={sessionDate}
-                            onChange={(e) => setSessionDate(e.target.value)}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        />
+                        <label htmlFor="date-input">Date</label>
+                        <input
+                            id="date-input"
+                            type="date"
+                            value={sessionDate}
+                            onChange={(e) => setSessionDate(e.target.value)}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        />
 
-                        <button 
-                            className="log-hours-btn" 
-                            onClick={handleLogHours}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            ➕ LOG HOURS
-                        </button>
+                        <button 
+                            className="log-hours-btn" 
+                            onClick={handleLogHours}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        >
+                            ➕ LOG HOURS
+                        </button>
 
-                        <button
-                            className="add-photo-btn"
-                            onClick={handleAddPhotoLink}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                            style={{ width: 'auto' }}
-                        >
-                            📸 {photoLink ? 'Update Photo Link' : 'Add Photo Link'}
-                        </button>
-                        {photoLink && (
-                            <p style={{ marginTop: '5px', fontSize: '0.9em' }}>
-                                Link saved: <a href={photoLink} target="_blank">{photoLink.substring(0, 30)}...</a>
-                            </p>
-                        )}
-                    </div>
-                    
-                    {/* --- SUMMARY --- */}
-                    <div className="summary-box">
-                        <h3>Job Summary</h3>
-                        <p><strong>Total Hours:</strong> {loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2)} hrs</p>
-                        
-                        {loggedSessions.length === 0 ? (
-                            <p>No hours logged yet.</p>
-                        ) : (
-                            <ul className="session-list">
-                                {loggedSessions.map((session) => (
-                                    <li key={session.id}>
-                                        {session.hours.toFixed(2)} hrs on <strong>{session.date}</strong>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                        
-                        <p><strong>Unique Products Used:</strong> {productsUsed.length}</p>
-                    </div>
-                    
-                    {/* --- SAVE BUTTONS --- */}
-                    <div className="save-buttons-container">
-                        <button 
-                            className="save-progress-btn" 
-                            onClick={handleSaveProgress}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            💾 SAVE PROGRESS
-                        </button>
-                        <button 
-                            className="finalize-btn" 
-                            onClick={handleFinalizeAndSend}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            ✉️ FINALIZE & SEND REPORT
-                        </button>
-                    </div>
+                        <button
+                            className="add-photo-btn"
+                            onClick={handleAddPhotoLink}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                            style={{ width: 'auto' }}
+                        >
+                            📸 {photoLink ? 'Update Photo Link' : 'Add Photo Link'}
+                        </button>
+                        {photoLink && (
+                            <p style={{ marginTop: '5px', fontSize: '0.9em' }}>
+                                Link saved: <a href={photoLink} target="_blank">{photoLink.substring(0, 30)}...</a>
+                            </p>
+                        )}
+                    </div>
+                    
+                    {/* --- SUMMARY --- */}
+                    <div className="summary-box">
+                        <h3>Job Summary</h3>
+                        <p><strong>Total Hours:</strong> {loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2)} hrs</p>
+                        
+                        {loggedSessions.length === 0 ? (
+                            <p>No hours logged yet.</p>
+                        ) : (
+                            <ul className="session-list">
+                                {loggedSessions.map((session) => (
+                                    <li key={session.id}>
+                                        {session.hours.toFixed(2)} hrs on <strong>{session.date}</strong>
+                                    </li>
+                                ))}
+                            </ul>
+                        )}
+                        
+                        <p><strong>Unique Products Used:</strong> {productsUsed.length}</p>
+                    </div>
+                    
+                    {/* --- SAVE BUTTONS --- */}
+                    <div className="save-buttons-container">
+                        <button 
+                            className="save-progress-btn" 
+                            onClick={handleSaveProgress}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        >
+                            💾 SAVE PROGRESS
+                        </button>
+                        <button 
+                            className="finalize-btn" 
+                            onClick={handleFinalizeAndSend}
+                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                        >
+                            ✉️ FINALIZE & SEND REPORT
+                        </button>
+                    </div>
 
-                </div>
-            );
-        }
+                </div>
+            );
+        }
 
-        ReactDOM.render(<JobTrackerApp />, document.getElementById('root'));
-    </script>
+        ReactDOM.render(<JobTrackerApp />, document.getElementById('root'));
+    </script>
 
 </body>
 </html>
-
-
-
-
-
-
-
-
