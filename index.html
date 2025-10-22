@@ -208,10 +208,52 @@
         ];
 
         const STATIC_PRODUCTS = [
+            // --- Original Sample Products (Kept for variety) ---
             { id: 1, type: "Siding", manufacturer: "Kaycan", product: "Vinyl: Avanti", length: "10 ft" },
             { id: 2, type: "Siding", manufacturer: "Gentek", product: "Aluminum: D5", length: "12 ft" },
             { id: 3, type: "Trim", manufacturer: "Allura", product: "Cement: Trimboards", length: "16 ft" },
             { id: 4, type: "Window", manufacturer: "JELD-WEN", product: "V-2500 Vinyl", length: "Custom" },
+            
+            // --- NEW: Mitten Products (Based on your list) ---
+            // Sentry Series
+            { id: 101, type: "Siding", manufacturer: "Mitten", product: "Sentry D4H", length: "12 ft" },
+            { id: 102, type: "Siding", manufacturer: "Mitten", product: "Sentry D4.5DL", length: "12 ft" },
+            { id: 103, type: "Siding", manufacturer: "Mitten", product: "Sentry Board & Batten", length: "10 ft" },
+
+            // Universal Trims
+            { id: 104, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 5/8 v J", length: "12 ft" },
+            { id: 105, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 7/8 v J", length: "12 ft" },
+            { id: 106, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal 3\" OSCP", length: "12 ft" }, // Outside Corner Post
+            { id: 107, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal ISCP", length: "12 ft" }, // Inside Corner Post
+            { id: 108, type: "Trim/Starter", manufacturer: "Mitten", product: "Universal Htrim", length: "12 ft" },
+
+            // Soffit
+            { id: 109, type: "Soffit", manufacturer: "Mitten", product: "D5 Vertical Soffit", length: "12 ft" },
+            { id: 110, type: "Soffit", manufacturer: "Mitten", product: "D5 Full Vent Perforated", length: "12 ft" },
+
+            // Blocks & Vents
+            { id: 111, type: "Block", manufacturer: "Mitten", product: "Light JBlock", length: "N/A" },
+            { id: 112, type: "Block", manufacturer: "Mitten", product: "Recessed split JBlock(elec)", length: "N/A" },
+            { id: 113, type: "Vent", manufacturer: "Mitten", product: "6\" hooded exhaust vent", length: "N/A" },
+            { id: 114, type: "Vent", manufacturer: "Mitten", product: "6\" louvered exhaust vent", length: "N/A" },
+            { id: 115, type: "Vent", manufacturer: "Mitten", product: "4\" hooded dryer vent", length: "N/A" },
+            { id: 116, type: "Vent", manufacturer: "Mitten", product: "4\" louvered dryer vent", length: "N/A" },
+            { id: 117, type: "Vent", manufacturer: "Mitten", product: "22\" Octagon Gable Vent", length: "N/A" },
+            { id: 118, type: "Vent", manufacturer: "Mitten", product: "18\" octagon gable vent", length: "N/A" },
+            
+            // Foundry Series
+            { id: 119, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Split Shakes", length: "10 ft" },
+            { id: 120, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shakes Corner", length: "N/A" },
+            { id: 121, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Weathered Staggered Shakes", length: "10 ft" },
+            { id: 122, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shake Corner Kit", length: "N/A" },
+            { id: 123, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry Weathered 7\" Shake Corner Kit", length: "N/A" },
+            
+            // Rustic Series
+            { id: 124, type: "Siding", manufacturer: "Mitten", product: "Rustic D4.5DL", length: "12 ft" },
+            { id: 125, type: "Siding", manufacturer: "Mitten", product: "Rustic BB", length: "10 ft" },
+            { id: 126, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic ISCP", length: "10 ft" },
+            { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
+            { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
         ];
 
         // Utility to manage Local Storage
@@ -581,3 +623,4 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
 
 </body>
 </html>
+
