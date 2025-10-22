@@ -518,6 +518,16 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                 <option key={p.id} value={p.product}>{`${p.product} (${p.type})`}</option>
                             ))}
                         </select>
+                        <label htmlFor="product-quantity-input">Quantity Used (Feet, Pieces, etc.)</label>
+<input
+    id="product-quantity-input"
+    type="number"
+    value={newProductQuantity}
+    onChange={(e) => setNewProductQuantity(e.target.value)}
+    placeholder="e.g., 200 or 12"
+    min="1"
+    disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+/>
 
                         <button 
                             className="add-product-btn" 
@@ -638,6 +648,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
 
 </body>
 </html>
+
 
 
 
