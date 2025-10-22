@@ -311,13 +311,11 @@
             const [loggedSessions, setLoggedSessions] = React.useState([]);
             const [photoLink, setPhotoLink] = React.useState('');
 
-            // Form state
-            const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
-            const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
-            const [hoursLogged, setHoursLogged] = React.useState('');
-            const [sessionDate, setSessionDate] = React.useState(new Date().toISOString().substring(0, 10));
-            const [newJobNameInput, setNewJobNameInput] = React.useState('');
-          
+          // Form state
+const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
+const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
+const [newProductQuantity, setNewProductQuantity] = React.useState(''); // <--- THIS WAS MISSING
+const [hoursLogged, setHoursLogged] = React.useState('');
             
             // Effect to load data when the job changes
             React.useEffect(() => {
@@ -366,18 +364,38 @@
                 setNewJobNameInput('');
             };
 
-            const handleAddProduct = () => {
+          const handleAddProduct = () => {
+                const quantity = parseFloat(newProductQuantity);
+
+                if (isNaN(quantity) || quantity <= 0) {
+                    alert("Please enter a valid quantity for the product.");
+                    return;
+                }
+
                 const productMatch = STATIC_PRODUCTS.find(p => p.manufacturer === newProductManufacturer && p.product === newProductModel);
-                if (!productMatch) return; // Should not happen with current select logic
+                if (!productMatch) return; 
+
+                // Determine the unit based on the 'length' field
+                let unit = 'pieces'; 
+                if (productMatch.length.toLowerCase().includes('ft') || productMatch.length.toLowerCase().includes('feet')) {
+                    unit = 'feet';
+                } else if (productMatch.length.toLowerCase() === 'n/a') {
+                    unit = 'pieces'; 
+                }
 
                 const newProduct = {
                     id: Date.now(),
                     type: productMatch.type,
                     manufacturer: productMatch.manufacturer,
                     product: productMatch.product,
-                    length: productMatch.length
+                    length: productMatch.length,
+                    quantity: quantity, // <-- ADDED
+                    unit: unit,        // <-- ADDED
                 };
                 setProductsUsed(prev => [...prev, newProduct]);
+                
+                setNewProductQuantity(''); // <-- ADDED
+        
             };
 
             const handleRemoveProduct = (id) => {
@@ -544,7 +562,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                         {productsUsed.map((product) => (
                             <li key={product.id}>
                                 <div className="product-item-details">
-                                    <strong>{product.manufacturer} {product.product}</strong>
+                                    <strong>{product.manufacturer} {product.product}</strong> ({product.quantity} {product.unit})
                                     <br/>
                                     <small>{product.type} ({product.length})</small>
                                 </div>
@@ -650,6 +668,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
 
 </body>
 </html>
+
 
 
 
