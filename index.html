@@ -208,30 +208,49 @@
         ];
 
         const STATIC_PRODUCTS = [
-            // --- Original Sample Products (Kept for variety) ---
-            { id: 1, type: "Siding", manufacturer: "Kaycan", product: "Vinyl: Avanti", length: "10 ft" },
-            { id: 2, type: "Siding", manufacturer: "Gentek", product: "Aluminum: D5", length: "12 ft" },
-            { id: 3, type: "Trim", manufacturer: "Allura", product: "Cement: Trimboards", length: "16 ft" },
-            { id: 4, type: "Window", manufacturer: "JELD-WEN", product: "V-2500 Vinyl", length: "Custom" },
-            
-            // --- NEW: Mitten Products (Based on your list) ---
-            // Sentry Series
+           // --- NEW KAYCAN VINYL PRODUCTS ---
+            { id: 201, type: "Vinyl Siding", manufacturer: "Kaycan", product: "Avanti", length: "10 ft" },
+            { id: 202, type: "Vinyl Siding", manufacturer: "Kaycan", product: "Elegance D5DL", length: "12 ft" },
+            { id: 203, type: "Vinyl Siding", manufacturer: "Kaycan", product: "Board & Batten standard", length: "10 ft" },
+            { id: 204, type: "Vinyl Siding", manufacturer: "Kaycan", product: "Board & Batten white", length: "10 ft" },
+            { id: 205, type: "Vinyl Trim", manufacturer: "Kaycan", product: "Universal 5/8 VJ", length: "12 ft" },
+            { id: 206, type: "Vinyl Trim", manufacturer: "Kaycan", product: "Universal 5/8 VJ Wideface", length: "12 ft" },
+            { id: 207, type: "Vinyl Trim/Corner", manufacturer: "Kaycan", product: "Universal OSCP", length: "10 ft" },
+            { id: 208, type: "Vinyl Trim/Corner", manufacturer: "Kaycan", product: "Universal ISCP", length: "10 ft" },
+            { id: 209, type: "Vinyl Accessory", manufacturer: "Kaycan", product: "Vinyl Starter Strip", length: "12 ft" },
+            { id: 210, type: "Vinyl Accessory", manufacturer: "Kaycan", product: "Drip Cap", length: "12 ft" },
+
+            // --- NEW KAYCAN ALUMINUM PRODUCTS ---
+            { id: 211, type: "Aluminum Soffit", manufacturer: "Kaycan", product: "Quad 4 Full Vented", length: "12 ft" },
+            { id: 212, type: "Aluminum Soffit", manufacturer: "Kaycan", product: "Deluxe Plain Soffit", length: "12 ft" },
+            { id: 213, type: "Aluminum Soffit", manufacturer: "Kaycan", product: "Deluxe Vented Soffit", length: "12 ft" },
+            { id: 214, type: "Aluminum Soffit", manufacturer: "Kaycan", product: "SP600 Plain Soffit", length: "12 ft" },
+            { id: 215, type: "Aluminum Soffit", manufacturer: "Kaycan", product: "SP600 Vented Soffit", length: "12 ft" },
+            { id: 216, type: "Aluminum Fascia", manufacturer: "Kaycan", product: "6\" Fascia", length: "12 ft" },
+            { id: 217, type: "Aluminum Fascia", manufacturer: "Kaycan", product: "8\" Fascia", length: "12 ft" },
+            { id: 218, type: "Aluminum Trim", manufacturer: "Kaycan", product: "3/8\" AJ", length: "12 ft" },
+            { id: 219, type: "Aluminum Coil", manufacturer: "Kaycan", product: "Flatstock coil", length: "50 ft" },
+            { id: 220, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "Trough", length: "10 ft" },
+            { id: 221, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "Pipestrap", length: "N/A" },
+            { id: 222, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "Downpipe 3\"", length: "10 ft" },
+            { id: 223, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "Elbow 3\"", length: "N/A" },
+            { id: 224, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "Endcaps", length: "N/A" },
+            { id: 225, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "Inside Mitres", length: "N/A" },
+            { id: 226, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "Outside Mitres", length: "N/A" },
+            { id: 227, type: "Eaves/Gutter", manufacturer: "Kaycan", product: "4' Leafguard", length: "4 ft" },
+            { id: 228, type: "Sealant", manufacturer: "Kaycan", product: "Tremco Caulking", length: "N/A" },
+
+            // --- Mitten Products (Kept from previous update) ---
             { id: 101, type: "Siding", manufacturer: "Mitten", product: "Sentry D4H", length: "12 ft" },
             { id: 102, type: "Siding", manufacturer: "Mitten", product: "Sentry D4.5DL", length: "12 ft" },
             { id: 103, type: "Siding", manufacturer: "Mitten", product: "Sentry Board & Batten", length: "10 ft" },
-
-            // Universal Trims
             { id: 104, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 5/8 v J", length: "12 ft" },
             { id: 105, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 7/8 v J", length: "12 ft" },
-            { id: 106, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal 3\" OSCP", length: "12 ft" }, // Outside Corner Post
-            { id: 107, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal ISCP", length: "12 ft" }, // Inside Corner Post
+            { id: 106, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal 3\" OSCP", length: "12 ft" }, 
+            { id: 107, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal ISCP", length: "12 ft" }, 
             { id: 108, type: "Trim/Starter", manufacturer: "Mitten", product: "Universal Htrim", length: "12 ft" },
-
-            // Soffit
             { id: 109, type: "Soffit", manufacturer: "Mitten", product: "D5 Vertical Soffit", length: "12 ft" },
             { id: 110, type: "Soffit", manufacturer: "Mitten", product: "D5 Full Vent Perforated", length: "12 ft" },
-
-            // Blocks & Vents
             { id: 111, type: "Block", manufacturer: "Mitten", product: "Light JBlock", length: "N/A" },
             { id: 112, type: "Block", manufacturer: "Mitten", product: "Recessed split JBlock(elec)", length: "N/A" },
             { id: 113, type: "Vent", manufacturer: "Mitten", product: "6\" hooded exhaust vent", length: "N/A" },
@@ -240,20 +259,21 @@
             { id: 116, type: "Vent", manufacturer: "Mitten", product: "4\" louvered dryer vent", length: "N/A" },
             { id: 117, type: "Vent", manufacturer: "Mitten", product: "22\" Octagon Gable Vent", length: "N/A" },
             { id: 118, type: "Vent", manufacturer: "Mitten", product: "18\" octagon gable vent", length: "N/A" },
-            
-            // Foundry Series
             { id: 119, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Split Shakes", length: "10 ft" },
             { id: 120, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shakes Corner", length: "N/A" },
             { id: 121, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Weathered Staggered Shakes", length: "10 ft" },
             { id: 122, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shake Corner Kit", length: "N/A" },
             { id: 123, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry Weathered 7\" Shake Corner Kit", length: "N/A" },
-            
-            // Rustic Series
             { id: 124, type: "Siding", manufacturer: "Mitten", product: "Rustic D4.5DL", length: "12 ft" },
             { id: 125, type: "Siding", manufacturer: "Mitten", product: "Rustic BB", length: "10 ft" },
             { id: 126, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic ISCP", length: "10 ft" },
             { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
             { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
+
+            // --- Other Sample Products (Kept for completeness) ---
+            { id: 5, type: "Siding", manufacturer: "Gentek", product: "Aluminum: D5", length: "12 ft" },
+            { id: 6, type: "Trim", manufacturer: "Allura", product: "Cement: Trimboards", length: "16 ft" },
+            { id: 7, type: "Window", manufacturer: "JELD-WEN", product: "V-2500 Vinyl", length: "Custom" },
         ];
 
         // Utility to manage Local Storage
@@ -623,4 +643,5 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
 
 </body>
 </html>
+
 
