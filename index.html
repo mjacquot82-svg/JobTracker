@@ -270,7 +270,8 @@
             { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
             { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
         ];
-
+    
+        
         // Utility to manage Local Storage
         const loadJobData = (jobName) => {
             const data = localStorage.getItem(`jobData_${jobName}`);
@@ -316,6 +317,8 @@
             const [hoursLogged, setHoursLogged] = React.useState('');
             const [sessionDate, setSessionDate] = React.useState(new Date().toISOString().substring(0, 10));
             const [newJobNameInput, setNewJobNameInput] = React.useState('');
+            const [newProductQuantity, setNewProductQuantity] = React.useState('');
+            
 
             // Effect to load data when the job changes
             React.useEffect(() => {
@@ -648,6 +651,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
 
 </body>
 </html>
+
 
 
 
