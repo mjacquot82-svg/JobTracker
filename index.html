@@ -146,7 +146,7 @@ const JobTrackerApp = () => {
     // --- FORM INPUT STATE ---
     const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
     const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
-    const [newProductQuantity, setNewProductQuantity] = React.useState(''); // Initialized to empty string for disabled check
+    const [newProductQuantity, setNewProductQuantity] = React.useState(''); // Initialized to empty string
     const [newProductUnit, setNewProductUnit] = React.useState('feet');
     const [hoursLogged, setHoursLogged] = React.useState('');
     const [newJobNameInput, setNewJobNameInput] = React.useState(''); 
@@ -174,7 +174,7 @@ const JobTrackerApp = () => {
             setSavedJobNames(loadSavedJobNames());
         }
     }, [productsUsed, loggedSessions, currentJob.name]);
-const handleJobChange = (event) => {
+    const handleJobChange = (event) => {
         const selectedValue = event.target.value;
         const newJobOption = STATIC_JOB_OPTIONS.find(o => o.key === 'new');
         
@@ -260,7 +260,7 @@ const handleJobChange = (event) => {
         saveJobData(currentJob.name, productsUsed, loggedSessions, ''); 
         alert(`💾 Progress saved for ${currentJob.name}!`);
     };
-         // MODIFIED FINALIZATION FUNCTION (Uses mailto and sets cleanup state)
+            // MODIFIED FINALIZATION FUNCTION (Uses mailto and sets cleanup state)
     const handleFinalizeAndSend = () => {
         const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
         const currentTime = new Date().toLocaleString();
@@ -338,7 +338,7 @@ ${imageStatus}
     ];
     
     const allManufacturers = Array.from(new Set(STATIC_PRODUCTS.map(p => p.manufacturer)));
-    const availableModels = STATIC_PRODUCTS.filter(p => p.manufacturer === newProductManufacturer);  
+    const availableModels = STATIC_PRODUCTS.filter(p => p.manufacturer === newProductManufacturer);
             // RENDER LOGIC
     
     // 1. New Job Creation View
@@ -494,7 +494,8 @@ ${imageStatus}
                     onClick={handleAddProduct}
                     disabled={
                         currentJob.name === STATIC_JOB_OPTIONS[0].name || 
-                        !newProductQuantity // <--- CORRECTED LOGIC HERE
+                        isNaN(parseFloat(newProductQuantity)) || 
+                        parseFloat(newProductQuantity) < 1
                     }
                 >
                     ➕ ADD PRODUCT TO LIST
