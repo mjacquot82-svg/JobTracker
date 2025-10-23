@@ -136,7 +136,7 @@ const JobTrackerApp = () => {
     const [loggedSessions, setLoggedSessions] = React.useState([]);
     const [tempImageFile, setTempImageFile] = React.useState(null); 
     
-    // *** NEW STATE FOR ACKNOWLEDGMENT SCREEN ***
+    // State for acknowledgment screen
     const [awaitingCleanup, setAwaitingCleanup] = React.useState(null); 
 
     // --- FORM INPUT STATE ---
@@ -170,7 +170,7 @@ const JobTrackerApp = () => {
             setSavedJobNames(loadSavedJobNames());
         }
     }, [productsUsed, loggedSessions, currentJob.name]);
-    const handleJobChange = (event) => {
+const handleJobChange = (event) => {
         const selectedValue = event.target.value;
         const newJobOption = STATIC_JOB_OPTIONS.find(o => o.key === 'new');
         
@@ -256,7 +256,7 @@ const JobTrackerApp = () => {
         saveJobData(currentJob.name, productsUsed, loggedSessions, ''); 
         alert(`💾 Progress saved for ${currentJob.name}!`);
     };
-          // *** MODIFIED FINALIZATION FUNCTION (NO PROMPT/TIMEOUT) ***
+            // MODIFIED FINALIZATION FUNCTION (Uses mailto and sets cleanup state)
     const handleFinalizeAndSend = () => {
         const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
         const currentTime = new Date().toLocaleString();
@@ -299,11 +299,11 @@ ${imageStatus}
         // Open the user's email client
         window.location.href = mailtoLink;
 
-        // *** NEW: Set state to show the cleanup acknowledgment screen immediately ***
+        // Set state to show the cleanup acknowledgment screen immediately
         setAwaitingCleanup(currentJob.name);
     };
 
-    // *** NEW: DEDICATED CLEANUP FUNCTION (RUNS WHEN USER CONFIRMS) ***
+    // DEDICATED CLEANUP FUNCTION (Runs when user confirms email was sent)
     const handleConfirmAndRemove = () => {
         if (!awaitingCleanup) return; // Safety check
 
@@ -315,7 +315,7 @@ ${imageStatus}
         // 2. Remove the job name from the list
         removeJobName(jobToRemove); 
 
-        // 3. Update the job list state explicitly and immediately
+        // 3. Update the job list state
         const updatedNamesList = loadSavedJobNames();
         setSavedJobNames(updatedNamesList); 
 
@@ -363,7 +363,7 @@ ${imageStatus}
         );
     } 
     
-    // *** 2. NEW: Acknowledgment/Cleanup Screen ***
+    // 2. Acknowledgment/Cleanup Screen
     else if (awaitingCleanup) {
         return (
             <div className="container py-5 text-center">
@@ -460,7 +460,7 @@ ${imageStatus}
 
                 {/* --- QUANTITY AND UNIT INPUT --- */}
                 <label htmlFor="product-quantity-input" className="form-label">Quantity Used</label>
-                <div className="quantity-group mb-3 d-flex gap-2"> {/* Added d-flex gap-2 here */}
+                <div className="quantity-group mb-3 d-flex gap-2"> 
                     <input
                         id="product-quantity-input"
                         type="number"
@@ -488,7 +488,10 @@ ${imageStatus}
                 <button 
                     className="add-product-btn btn btn-primary w-100" 
                     onClick={handleAddProduct}
-                    disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                    disabled={
+                        currentJob.name === STATIC_JOB_OPTIONS[0].name || 
+                        !newProductQuantity // <--- CORRECTED LOGIC HERE
+                    }
                 >
                     ➕ ADD PRODUCT TO LIST
                 </button>
@@ -615,3 +618,7 @@ ${imageStatus}
         </div>
     );
 };
+            
+            
+
+
