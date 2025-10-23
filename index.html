@@ -503,19 +503,26 @@ ${imageStatus}
                 // Open the user's email client
                 window.location.href = mailtoLink;
 
-                // Prompt user to clear data AND remove job name
-                setTimeout(() => {
-                    const confirmClear = confirm("Email client opened with the report. Do you want to CLEAR the job data (hours, products) AND REMOVE THIS JOB from the selection list now?");
-                    if (confirmClear) {
-                        clearJobData(currentJob.name);
-                        removeJobName(currentJob.name); // <--- NEW STEP: REMOVE JOB NAME
-                        setSavedJobNames(loadSavedJobNames()); // Refresh the job list
-                        setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
-                        setTempImageFile(null);
-                        alert(`✅ Job ${currentJob.name} has been completed and removed from the list.`);
-                    }
-                }, 500); 
-            };
+               // Prompt user to clear data AND remove job name
+                setTimeout(() => {
+                    const confirmClear = confirm("Email client opened with the report. Do you want to CLEAR the job data (hours, products) AND PERMANENTLY REMOVE THIS JOB from the selection list?");
+                    if (confirmClear) {
+                        const jobToRemove = currentJob.name; // Capture the name before changing state
+                        
+                        clearJobData(jobToRemove);
+                        removeJobName(jobToRemove); // Correctly removes from localStorage
+
+                        // CRITICAL FIX: Update the job list state explicitly and immediately
+                        const updatedNamesList = loadSavedJobNames();
+                        setSavedJobNames(updatedNamesList); 
+
+                        // Reset the current job state
+                        setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false });
+                        setTempImageFile(null);
+                        alert(`✅ Job ${jobToRemove} has been completed and removed from the list.`);
+                    }
+                }, 500); 
+            };
 
             const allJobOptions = [
                 ...STATIC_JOB_OPTIONS.filter(o => o.key !== 'new'), 
@@ -820,5 +827,6 @@ ${imageStatus}
     </script>
 </body>
 </html>
+
 
 
