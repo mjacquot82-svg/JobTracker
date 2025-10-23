@@ -213,39 +213,50 @@
         ];
 
         // Utility to manage Local Storage
-        const loadJobData = (jobName) => {
-            const data = localStorage.getItem(`jobData_${jobName}`);
-            return data ? JSON.parse(data) : { products: [], sessions: [], photoLink: '' };
-        };
+       // --- 4. Local Storage and Utility Functions (The corrected section) ---
 
-        const saveJobData = (jobName, products, sessions, photoLink) => {
-            const data = JSON.stringify({ products, sessions, photoLink });
-            localStorage.setItem(`jobData_${jobName}`, data);
-        };
+// Constant for the job names list key
+const JOB_NAMES_KEY = 'savedJobs';
 
-        const clearJobData = (jobName) => {
-            localStorage.removeItem(`jobData_${jobName}`);
-            const savedJobs = JSON.parse(localStorage.getItem('savedJobs') || '[]');
-            const updatedJobs = savedJobs.filter(name => name !== jobName);
-            localStorage.setItem('savedJobs', JSON.stringify(updatedJobs));
-        };
-        
-        const loadSavedJobNames = () => {
-            return JSON.parse(localStorage.getItem('savedJobs') || '[]');
-        };
-
-        const saveNewJobName = (jobName) => {
-            const savedJobs = loadSavedJobNames();
-            if (!savedJobs.includes(jobName)) {
-                const newSavedJobs = [...savedJobs, jobName].sort();
-                localStorage.setItem('savedJobs', JSON.stringify(newSavedJobs));
-            }
-            const removeJobName = (jobName) => {
-    let savedNames = loadSavedJobNames();
-    const updatedNames = savedNames.filter(name => name !== jobName);
-    localStorage.setItem(JOB_NAMES_KEY, JSON.stringify(updatedNames));
+// Utility to manage Local Storage
+const loadJobData = (jobName) => {
+    const data = localStorage.getItem(`jobData_${jobName}`);
+    return data ? JSON.parse(data) : { products: [], sessions: [], photoLink: '' };
 };
-        };
+
+const saveJobData = (jobName, products, sessions, photoLink) => {
+    const data = JSON.stringify({ products, sessions, photoLink });
+    localStorage.setItem(`jobData_${jobName}`, data);
+};
+
+// Clears the products/sessions data for a job (but keeps the job name in the list)
+const clearJobData = (jobName) => {
+    localStorage.removeItem(`jobData_${jobName}`);
+};
+
+// Loads the list of saved job names
+const loadSavedJobNames = () => {
+    return JSON.parse(localStorage.getItem(JOB_NAMES_KEY) || '[]');
+};
+
+// Saves a new job name to the list
+const saveNewJobName = (jobName) => {
+    const savedJobs = loadSavedJobNames();
+    if (!savedJobs.includes(jobName)) {
+        const newSavedJobs = [...savedJobs, jobName].sort();
+        localStorage.setItem(JOB_NAMES_KEY, JSON.stringify(newSavedJobs));
+    }
+};
+
+// VVVV THIS IS THE FUNCTION THAT WAS BROKEN AND IS NOW FIXED VVVV
+// Removes the job name permanently from the saved list
+const removeJobName = (jobName) => {
+    let savedNames = loadSavedJobNames();
+    const updatedNames = savedNames.filter(name => name !== jobName);
+    localStorage.setItem(JOB_NAMES_KEY, JSON.stringify(updatedNames));
+}; // <--- THIS BRACE AND SEMICOLON MUST BE HERE
+// --- END OF SECTION 4 ---
+        
         const STATIC_PRODUCTS = [
             // --- KAYCAN VINYL PRODUCTS ---
             { id: 201, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Avanti", length: "10 ft" },
@@ -809,4 +820,5 @@ ${imageStatus}
     </script>
 </body>
 </html>
+
 
