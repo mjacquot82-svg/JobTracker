@@ -313,7 +313,6 @@
             { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
        );
        const JobTrackerApp = () => {
-          
             const [savedJobNames, setSavedJobNames] = React.useState(loadSavedJobNames);
             const initialJobName = STATIC_JOB_OPTIONS[0].name;
             
@@ -322,7 +321,6 @@
             const [productsUsed, setProductsUsed] = React.useState([]);
             
             const [loggedSessions, setLoggedSessions] = React.useState([]);
-            // photoLink state is removed, only temporary file info is tracked
             const [tempImageFile, setTempImageFile] = React.useState(null); 
 
             // --- FORM INPUT STATE ---
@@ -333,15 +331,15 @@
             const [hoursLogged, setHoursLogged] = React.useState('');
             const [newJobNameInput, setNewJobNameInput] = React.useState(''); 
             const [sessionDate, setSessionDate] = React.useState(getTodayDate()); 
+            // NEW: Office Email State - REMINDER: Set your actual office email here!
+            const [officeEmail, setOfficeEmail] = React.useState('YOUR_OFFICE_EMAIL@yourdomain.com'); 
             
             // Effect to load data when the job changes
             React.useEffect(() => {
                 if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
-                    // Note: photoLink is no longer loaded or saved
                     const { products, sessions } = loadJobData(currentJob.name);
                     setProductsUsed(products);
                     setLoggedSessions(sessions);
-                    // Since we can't save the actual file or link, we only load products/sessions
                 } else {
                     setProductsUsed([]);
                     setLoggedSessions([]);
@@ -352,7 +350,7 @@
             React.useEffect(() => {
                 if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
                     // Only save products and sessions
-                    saveJobData(currentJob.name, productsUsed, loggedSessions, ''); // Pass empty string for link
+                    saveJobData(currentJob.name, productsUsed, loggedSessions, ''); 
                     saveNewJobName(currentJob.name);
                     setSavedJobNames(loadSavedJobNames());
                 }
@@ -434,7 +432,7 @@
                 const file = event.target.files[0];
                 if (file) {
                     setTempImageFile(file);
-                    alert(`Photo captured: ${file.name}. This filename will be included in your report.`);
+                    alert(`Photo captured: ${file.name}. This filename will be included in your report as a reminder to attach the file manually.`);
                     event.target.value = null; // Reset file input
                 }
             };
@@ -445,42 +443,60 @@
                 alert(`💾 Progress saved for ${currentJob.name}!`);
             };
 
+            // MODIFIED FUNCTION TO USE MAILTO
             const handleFinalizeAndSend = () => {
                 const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
+                const currentTime = new Date().toLocaleString();
                 
                 let imageStatus = '';
                 if (tempImageFile) {
-                    imageStatus = `Photo Captured: ${tempImageFile.name} (File path not included in web report for security.)`;
+                    imageStatus = `Photo Captured: ${tempImageFile.name}`;
                 } else {
-                    imageStatus = 'Photo: N/A';
+                    imageStatus = 'Photo Status: N/A';
                 }
 
-                const report = `
-Job Report for: ${currentJob.name}
-
---- Summary ---
-Total Hours: ${totalHours} hrs
-Unique Products Used: ${productsUsed.length}
-${imageStatus}
+                // Create the clean, multi-line report body
+                const reportBody = `
+Job Name: ${currentJob.name}
+Total Hours Logged: ${totalHours}
+Report Time: ${currentTime}
 
 --- Products Used ---
 ${productsUsed.map(p => `- ${p.type}: ${p.manufacturer} ${p.product} (${p.quantity} ${p.unit})`).join('\n')}
 
 --- Sessions Logged ---
 ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')}
-                `;
 
-                // Show alert with full report for easy copying to email/text
-                alert("--- FINALIZE & SEND REPORT ---\n\n" + report);
+--- Notes ---
+${imageStatus}
+(REMINDER: You must manually attach the photo file to this email before sending.)
+                `.trim();
 
-                // Clear data after finalizing
-                const confirmClear = confirm("Report contents copied. Do you want to CLEAR the job data (hours, products) for this job now?");
-                if (confirmClear) {
-                    clearJobData(currentJob.name);
-                    setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
-                    setTempImageFile(null); // Clear temporary file status
-                    alert(`✅ Data for ${currentJob.name} has been cleared and the job has been reset.`);
+                // Encode the subject and body for the mailto link
+                const subject = encodeURIComponent(`Job Report: ${currentJob.name} - ${getTodayDate()}`);
+                const body = encodeURIComponent(reportBody);
+
+                if (!officeEmail || officeEmail === 'YOUR_OFFICE_EMAIL@yourdomain.com') {
+                    alert("Please enter a valid Office Email Address before finalizing.");
+                    return;
                 }
+                
+                const mailtoLink = `mailto:${officeEmail}?subject=${subject}&body=${body}`;
+
+                // Open the user's email client
+                window.location.href = mailtoLink;
+
+                // Prompt user to clear data after email client has been opened
+                // Use a short delay to give the browser time to open the mail client on some phones
+                setTimeout(() => {
+                    const confirmClear = confirm("Email client opened with the report. Do you want to CLEAR the job data (hours, products) for this job now?");
+                    if (confirmClear) {
+                        clearJobData(currentJob.name);
+                        setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
+                        setTempImageFile(null);
+                        alert(`✅ Data for ${currentJob.name} has been cleared and the job has been reset.`);
+                    }
+                }, 500); 
             };
 
             const allJobOptions = [
@@ -648,7 +664,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                            <p className="text-muted text-center mt-3">No products logged yet.</p>
                     )}
 
-                    {/* --- HOURS TRACKING --- */}
+                    {/* --- HOURS TRACKING & OFFICE EMAIL --- */}
                     <h2>⏱️ Time & Photos</h2>
                     <div className="card card-body mb-4" style={{ opacity: currentJob.name === STATIC_JOB_OPTIONS[0].name ? 0.5 : 1 }}>
                         <div className="row">
@@ -675,6 +691,20 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                     className="form-control"
                                 />
                             </div>
+                        </div>
+                        
+                        {/* NEW OFFICE EMAIL INPUT */}
+                        <div className="form-group mb-3">
+                            <label htmlFor="office-email-input" className="form-label">Office Report Email</label>
+                            <input
+                                id="office-email-input"
+                                type="email"
+                                value={officeEmail}
+                                onChange={(e) => setOfficeEmail(e.target.value)}
+                                placeholder="office@company.com"
+                                disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                                className="form-control"
+                            />
                         </div>
 
                         <button 
@@ -738,6 +768,11 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                 <p><strong>Total Hours Logged:</strong> {loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2)} hrs</p>
                                 <p><strong>Products Count:</strong> {productsUsed.length}</p>
                                 <p><strong>Photo Status:</strong> {tempImageFile ? `File Captured` : `N/A`}</p>
+                                <p><strong>Will Send To:</strong> 
+                                    <span className={officeEmail === 'YOUR_OFFICE_EMAIL@yourdomain.com' ? 'text-danger' : 'text-success'}>
+                                        {officeEmail}
+                                    </span>
+                                </p>
                             </div>
 
                             <div className="save-buttons-container">
@@ -767,4 +802,3 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
     </script>
 </body>
 </html>
-            
