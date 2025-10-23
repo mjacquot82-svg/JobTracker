@@ -256,7 +256,7 @@ const JobTrackerApp = () => {
         saveJobData(currentJob.name, productsUsed, loggedSessions, ''); 
         alert(`💾 Progress saved for ${currentJob.name}!`);
     };
-            // *** MODIFIED FINALIZATION FUNCTION (NO PROMPT/TIMEOUT) ***
+          // *** MODIFIED FINALIZATION FUNCTION (NO PROMPT/TIMEOUT) ***
     const handleFinalizeAndSend = () => {
         const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
         const currentTime = new Date().toLocaleString();
