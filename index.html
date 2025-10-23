@@ -10,8 +10,8 @@
     
     <style>
         /* Note: Since we are using Bootstrap, most of these custom styles 
-           can be replaced by Bootstrap classes (e.g., card, row, col, etc.) 
-           for a cleaner final look, but they are kept for compatibility. */
+            can be replaced by Bootstrap classes (e.g., card, row, col, etc.) 
+            for a cleaner final look, but they are kept for compatibility. */
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
             background-color: #f4f7f6;
@@ -44,36 +44,21 @@
         }
 
         label {
-            /* These styles are mostly overridden by Bootstrap's forms */
             display: block;
             margin-top: 15px;
             font-weight: bold;
             color: #444;
         }
 
-        /* * IMPORTANT: This section of custom styling for inputs/selects 
-         * is now mostly handled by the Bootstrap class 'form-control'.
-         * I am leaving your original CSS here but adding the 
-         * 'form-control' class in the JavaScript to ensure Bootstrap applies.
-         */
         select, input[type="text"], input[type="number"], input[type="date"] {
-            /* width: 100%; (Handled by form-control) */
             padding: 10px;
             margin-top: 5px;
-            /* border: 1px solid #ddd; (Handled by form-control) */
-            /* border-radius: 6px; (Handled by form-control) */
             box-sizing: border-box;
             font-size: 1em;
         }
-
-        /* * IMPORTANT: The 'button' selector is removed from the CSS 
-         * to allow Bootstrap's 'btn' classes to take full control. 
-         * Only the custom classes remain.
-         */
         
         .add-product-btn {
-            /* The default colors here are now set by btn-primary */
-            background-color: #007bff; /* Kept for fallback/custom class */
+            background-color: #007bff; 
             color: white;
             margin-bottom: 15px;
         }
@@ -83,7 +68,7 @@
         }
 
         .log-hours-btn {
-            background-color: #28a745; /* Kept for btn-success type color */
+            background-color: #28a745; 
             color: white;
         }
 
@@ -92,7 +77,7 @@
         }
 
         .add-photo-btn {
-            background-color: #ffc107; /* Kept for btn-warning type color */
+            background-color: #ffc107; 
             color: #333;
             margin-top: 5px;
         }
@@ -102,7 +87,7 @@
         }
 
         .save-progress-btn {
-            background-color: #17a2b8; /* Kept for btn-info type color */
+            background-color: #17a2b8; 
             color: white;
         }
 
@@ -111,9 +96,9 @@
         }
 
         .finalize-btn {
-            background-color: #dc3545; /* Kept for btn-danger type color */
+            background-color: #dc3545; 
             color: white;
-            margin-left: 10px; /* Separator for the two large buttons */
+            margin-left: 10px; 
         }
 
         .finalize-btn:hover:not(:disabled) {
@@ -217,74 +202,9 @@
             { name: "--- Select a Job ---", key: "default", value: null },
             { name: "Acme Office Renovation", key: "acme", value: "Acme Office Renovation" },
             { name: "Riverside Home Build", key: "riverside", value: "Riverside Home Build" },
-            { name: "New Client Job...", key: "new", value: "New Client Job..." },  // Value should match the name if it's not null
+            { name: "New Client Job...", key: "new", value: "New Client Job..." },
         ];
 
-       const STATIC_PRODUCTS = [
-            // --- NEW KAYCAN VINYL PRODUCTS ---
-            { id: 201, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Avanti", length: "10 ft" },
-            { id: 202, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Elegance D5DL", length: "12 ft" },
-            { id: 203, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten standard", length: "10 ft" },
-            { id: 204, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten white", length: "10 ft" },
-            { id: 205, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ", length: "12 ft" },
-            { id: 206, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ Wideface", length: "12 ft" },
-            { id: 207, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal OSCP", length: "10 ft" },
-            { id: 208, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal ISCP", length: "10 ft" },
-            { id: 209, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Vinyl Starter Strip", length: "12 ft" },
-            { id: 210, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Drip Cap", length: "12 ft" },
-
-            // --- NEW KAYCAN ALUMINUM PRODUCTS ---
-            { id: 211, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Quad 4 Full Vented", length: "12 ft" },
-            { id: 212, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Plain Soffit", length: "12 ft" },
-            { id: 213, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Vented Soffit", length: "12 ft" },
-            { id: 214, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Plain Soffit", length: "12 ft" },
-            { id: 215, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Vented Soffit", length: "12 ft" },
-            { id: 216, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "6\" Fascia", length: "12 ft" },
-            { id: 217, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "8\" Fascia", length: "12 ft" },
-            { id: 218, type: "Trim", manufacturer: "Kaycan - Aluminum", product: "3/8\" AJ", length: "12 ft" },
-            { id: 219, type: "Coil", manufacturer: "Kaycan - Aluminum", product: "Flatstock coil", length: "50 ft" },
-            { id: 220, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Trough", length: "10 ft" },
-            { id: 221, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Pipestrap", length: "N/A" },
-            { id: 222, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Downpipe 3\"", length: "10 ft" },
-            { id: 223, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Elbow 3\"", length: "N/A" },
-            { id: 224, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Endcaps", length: "N/A" },
-            { id: 225, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Inside Mitres", length: "N/A" },
-            { id: 226, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Outside Mitres", length: "N/A" },
-            { id: 227, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "4' Leafguard", length: "4 ft" },
-            { id: 228, type: "Sealant", manufacturer: "Kaycan - Aluminum", product: "Tremco Caulking", length: "N/A" },
-
-            // --- MITTEN PRODUCTS ---
-            { id: 101, type: "Siding", manufacturer: "Mitten", product: "Sentry D4H", length: "12 ft" },
-            { id: 102, type: "Siding", manufacturer: "Mitten", product: "Sentry D4.5DL", length: "12 ft" },
-            { id: 103, type: "Siding", manufacturer: "Mitten", product: "Sentry Board & Batten", length: "10 ft" },
-            { id: 104, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 5/8 v J", length: "12 ft" },
-            { id: 105, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 7/8 v J", length: "12 ft" },
-            { id: 106, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal 3\" OSCP", length: "12 ft" }, 
-            { id: 107, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal ISCP", length: "12 ft" }, 
-            { id: 108, type: "Trim/Starter", manufacturer: "Mitten", product: "Universal Htrim", length: "12 ft" },
-            { id: 109, type: "Soffit", manufacturer: "Mitten", product: "D5 Vertical Soffit", length: "12 ft" },
-            { id: 110, type: "Soffit", manufacturer: "Mitten", product: "D5 Full Vent Perforated", length: "12 ft" },
-            { id: 111, type: "Block", manufacturer: "Mitten", product: "Light JBlock", length: "N/A" },
-            { id: 112, type: "Block", manufacturer: "Mitten", product: "Recessed split JBlock(elec)", length: "N/A" },
-            { id: 113, type: "Vent", manufacturer: "Mitten", product: "6\" hooded exhaust vent", length: "N/A" },
-            { id: 114, type: "Vent", manufacturer: "Mitten", product: "6\" louvered exhaust vent", length: "N/A" },
-            { id: 115, type: "Vent", manufacturer: "Mitten", product: "4\" hooded dryer vent", length: "N/A" },
-            { id: 116, type: "Vent", manufacturer: "Mitten", product: "4\" louvered dryer vent", length: "N/A" },
-            { id: 117, type: "Vent", manufacturer: "Mitten", product: "22\" Octagon Gable Vent", length: "N/A" },
-            { id: 118, type: "Vent", manufacturer: "Mitten", product: "18\" octagon gable vent", length: "N/A" },
-            { id: 119, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Split Shakes", length: "10 ft" },
-            { id: 120, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shakes Corner", length: "N/A" },
-            { id: 121, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Weathered Staggered Shakes", length: "10 ft" },
-            { id: 122, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shake Corner Kit", length: "N/A" },
-            { id: 123, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry Weathered 7\" Shake Corner Kit", length: "N/A" },
-            { id: 124, type: "Siding", manufacturer: "Mitten", product: "Rustic D4.5DL", length: "12 ft" },
-            { id: 125, type: "Siding", manufacturer: "Mitten", product: "Rustic BB", length: "10 ft" },
-            { id: 126, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic ISCP", length: "10 ft" },
-            { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
-            { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
-        ];
-        
-        
         // Utility to manage Local Storage
         const loadJobData = (jobName) => {
             const data = localStorage.getItem(`jobData_${jobName}`);
@@ -314,23 +234,96 @@
                 localStorage.setItem('savedJobs', JSON.stringify(newSavedJobs));
             }
         };
+        const STATIC_PRODUCTS = [
+            // --- KAYCAN VINYL PRODUCTS ---
+            { id: 201, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Avanti", length: "10 ft" },
+            { id: 202, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Elegance D5DL", length: "12 ft" },
+            { id: 203, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten standard", length: "10 ft" },
+            { id: 204, type: "Siding", manufacturer: "Kaycan - Vinyl", product: "Board & Batten white", length: "10 ft" },
+            { id: 205, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ", length: "12 ft" },
+            { id: 206, type: "Trim", manufacturer: "Kaycan - Vinyl", product: "Universal 5/8 VJ Wideface", length: "12 ft" },
+            { id: 207, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal OSCP", length: "10 ft" },
+            { id: 208, type: "Trim/Corner", manufacturer: "Kaycan - Vinyl", product: "Universal ISCP", length: "10 ft" },
+            { id: 209, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Vinyl Starter Strip", length: "12 ft" },
+            { id: 210, type: "Accessory", manufacturer: "Kaycan - Vinyl", product: "Drip Cap", length: "12 ft" },
 
+            // --- KAYCAN ALUMINUM PRODUCTS ---
+            { id: 211, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Quad 4 Full Vented", length: "12 ft" },
+            { id: 212, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Plain Soffit", length: "12 ft" },
+            { id: 213, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "Deluxe Vented Soffit", length: "12 ft" },
+            { id: 214, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Plain Soffit", length: "12 ft" },
+            { id: 215, type: "Soffit", manufacturer: "Kaycan - Aluminum", product: "SP600 Vented Soffit", length: "12 ft" },
+            { id: 216, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "6\" Fascia", length: "12 ft" },
+            { id: 217, type: "Fascia", manufacturer: "Kaycan - Aluminum", product: "8\" Fascia", length: "12 ft" },
+            { id: 218, type: "Trim", manufacturer: "Kaycan - Aluminum", product: "3/8\" AJ", length: "12 ft" },
+            { id: 219, type: "Coil", manufacturer: "Kaycan - Aluminum", product: "Flatstock coil", length: "50 ft" },
 
+            // --- MITTEN SIDING & TRIM PRODUCTS ---
+            { id: 101, type: "Siding", manufacturer: "Mitten", product: "Sentry D4H", length: "12 ft" },
+            { id: 102, type: "Siding", manufacturer: "Mitten", product: "Sentry D4.5DL", length: "12 ft" },
+            { id: 103, type: "Siding", manufacturer: "Mitten", product: "Sentry Board & Batten", length: "10 ft" },
+            { id: 104, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 5/8 v J", length: "12 ft" },
+            { id: 105, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Universal 7/8 v J", length: "12 ft" },
+            { id: 106, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal 3\" OSCP", length: "12 ft" }, 
+            { id: 107, type: "Trim/F-Channel", manufacturer: "Mitten", product: "Universal ISCP", length: "12 ft" }, 
+            { id: 108, type: "Trim/Starter", manufacturer: "Mitten", product: "Universal Htrim", length: "12 ft" },
+            { id: 109, type: "Soffit", manufacturer: "Mitten", product: "D5 Vertical Soffit", length: "12 ft" },
+            { id: 110, type: "Soffit", manufacturer: "Mitten", product: "D5 Full Vent Perforated", length: "12 ft" },
+            { id: 111, type: "Block", manufacturer: "Mitten", product: "Light JBlock", length: "N/A" },
+            { id: 112, type: "Block", manufacturer: "Mitten", product: "Recessed split JBlock(elec)", length: "N/A" },
+        ];
+        // CONTINUATION OF STATIC_PRODUCTS from Section 3
+       STATIC_PRODUCTS.push(
+            // --- KAYCAN EAVES/GUTTER PRODUCTS ---
+            { id: 220, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Trough", length: "10 ft" },
+            { id: 221, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Pipestrap", length: "N/A" },
+            { id: 222, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Downpipe 3\"", length: "10 ft" },
+            { id: 223, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Elbow 3\"", length: "N/A" },
+            { id: 224, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Endcaps", length: "N/A" },
+            { id: 225, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Inside Mitres", length: "N/A" },
+            { id: 226, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "Outside Mitres", length: "N/A" },
+            { id: 227, type: "Eaves/Gutter", manufacturer: "Kaycan - Aluminum", product: "4' Leafguard", length: "4 ft" },
+            { id: 228, type: "Sealant", manufacturer: "Kaycan - Aluminum", product: "Tremco Caulking", length: "N/A" },
+
+            // --- MITTEN VENTS & SHAKES PRODUCTS ---
+            { id: 113, type: "Vent", manufacturer: "Mitten", product: "6\" hooded exhaust vent", length: "N/A" },
+            { id: 114, type: "Vent", manufacturer: "Mitten", product: "6\" louvered exhaust vent", length: "N/A" },
+            { id: 115, type: "Vent", manufacturer: "Mitten", product: "4\" hooded dryer vent", length: "N/A" },
+            { id: 116, type: "Vent", manufacturer: "Mitten", product: "4\" louvered dryer vent", length: "N/A" },
+            { id: 117, type: "Vent", manufacturer: "Mitten", product: "22\" Octagon Gable Vent", length: "N/A" },
+            { id: 118, type: "Vent", manufacturer: "Mitten", product: "18\" octagon gable vent", length: "N/A" },
+            { id: 119, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Split Shakes", length: "10 ft" },
+            { id: 120, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shakes Corner", length: "N/A" },
+            { id: 121, type: "Shakes", manufacturer: "Mitten", product: "Foundry - 7\" Weathered Staggered Shakes", length: "10 ft" },
+            { id: 122, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry - 7\" Shake Corner Kit", length: "N/A" },
+            { id: 123, type: "Trim/Corner", manufacturer: "Mitten", product: "Foundry Weathered 7\" Shake Corner Kit", length: "N/A" },
+            
+            // --- MITTEN RUSTIC PRODUCTS ---
+            { id: 124, type: "Siding", manufacturer: "Mitten", product: "Rustic D4.5DL", length: "12 ft" },
+            { id: 125, type: "Siding", manufacturer: "Mitten", product: "Rustic BB", length: "10 ft" },
+            { id: 126, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic ISCP", length: "10 ft" },
+            { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
+            { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
+       );
         const JobTrackerApp = () => {
             const [savedJobNames, setSavedJobNames] = React.useState(loadSavedJobNames);
             const initialJobName = STATIC_JOB_OPTIONS[0].name;
-           
-                  const [loggedSessions, setLoggedSessions] = React.useState([]);
+            
+            // --- CORE APP STATE (Crucially added for missing variables) ---
+            const [currentJob, setCurrentJob] = React.useState({ name: initialJobName, isNew: false });
+            const [productsUsed, setProductsUsed] = React.useState([]);
+            
+            const [loggedSessions, setLoggedSessions] = React.useState([]);
             const [photoLink, setPhotoLink] = React.useState('');
 
-          // Form state (CORRECTIONS APPLIED HERE)
+            // --- FORM INPUT STATE ---
             const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
             const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
-            const [newProductQuantity, setNewProductQuantity] = React.useState(''); 
+            const [newProductQuantity, setNewProductQuantity] = React.useState(''); 
             const [hoursLogged, setHoursLogged] = React.useState('');
-            const [newJobNameInput, setNewJobNameInput] = React.useState(''); // <--- ADDED MISSING STATE
-            const [sessionDate, setSessionDate] = React.useState(getTodayDate()); // <--- ADDED MISSING STATE & INITIAL VALUE
-             
+            const [newJobNameInput, setNewJobNameInput] = React.useState(''); 
+            const [sessionDate, setSessionDate] = React.useState(getTodayDate()); 
+            
             // Effect to load data when the job changes
             React.useEffect(() => {
                 if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
@@ -352,7 +345,7 @@
                     saveNewJobName(currentJob.name);
                     setSavedJobNames(loadSavedJobNames());
                 }
-            }, [productsUsed, loggedSessions, photoLink, currentJob.name]); // Added currentJob.name to dependency array for clarity
+            }, [productsUsed, loggedSessions, photoLink, currentJob.name]); 
 
 
             const handleJobChange = (event) => {
@@ -373,8 +366,8 @@
                     return;
                 }
                 const newJobName = newJobNameInput.trim();
-                saveNewJobName(newJobName); 
-                setCurrentJob({ name: newJobName, isNew: false }); 
+                saveNewJobName(newJobName); 
+                setCurrentJob({ name: newJobName, isNew: false }); 
                 setNewJobNameInput('');
             };
 
@@ -387,14 +380,14 @@
                 }
 
                 const productMatch = STATIC_PRODUCTS.find(p => p.manufacturer === newProductManufacturer && p.product === newProductModel);
-                if (!productMatch) return; 
+                if (!productMatch) return; 
 
                 // Determine the unit based on the 'length' field
-                let unit = 'pieces'; 
+                let unit = 'pieces'; 
                 if (productMatch.length.toLowerCase().includes('ft') || productMatch.length.toLowerCase().includes('feet')) {
                     unit = 'feet';
                 } else if (productMatch.length.toLowerCase() === 'n/a') {
-                    unit = 'pieces'; 
+                    unit = 'pieces'; 
                 }
 
                 const newProduct = {
@@ -403,12 +396,12 @@
                     manufacturer: productMatch.manufacturer,
                     product: productMatch.product,
                     length: productMatch.length,
-                    quantity: quantity, 
-                    unit: unit,        
+                    quantity: quantity, 
+                    unit: unit,       
                 };
                 setProductsUsed(prev => [...prev, newProduct]);
                 
-                setNewProductQuantity(''); 
+                setNewProductQuantity(''); 
         
             };
 
@@ -425,7 +418,7 @@
 
                 const newSession = {
                     hours: hours,
-                    date: sessionDate, // This now correctly uses the state variable
+                    date: sessionDate, 
                     id: Date.now(),
                 };
 
@@ -469,14 +462,16 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                 const confirmClear = confirm("Report contents copied. Do you want to CLEAR the job data (hours, products, link) for this job now?");
                 if (confirmClear) {
                     clearJobData(currentJob.name);
-                    setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
+                    setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
                     alert(`✅ Data for ${currentJob.name} has been cleared and the job has been reset.`);
                 }
             };
 
-            const allJobOptions = [...STATIC_JOB_OPTIONS.filter(o => o.key !== 'new'), 
-                                    ...savedJobNames.filter(name => !STATIC_JOB_OPTIONS.some(o => o.name === name)).map(name => ({ name, key: name, value: name })),
-                                    STATIC_JOB_OPTIONS.find(o => o.key === 'new')];
+            const allJobOptions = [
+                ...STATIC_JOB_OPTIONS.filter(o => o.key !== 'new'), 
+                ...savedJobNames.filter(name => !STATIC_JOB_OPTIONS.some(o => o.name === name)).map(name => ({ name, key: name, value: name })),
+                STATIC_JOB_OPTIONS.find(o => o.key === 'new')
+            ];
             
 
             const allManufacturers = Array.from(new Set(STATIC_PRODUCTS.map(p => p.manufacturer)));
@@ -486,7 +481,6 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
             if (currentJob.isNew) {
                 // New Job Creation View
                 return (
-                    // START OF BOOTSTRAP CLASS CHANGES FOR NEW JOB VIEW
                     <div className="container py-4"> 
                         <h1 className="mb-4">New Job Setup</h1>
                         <div className="form-group">
@@ -494,7 +488,6 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                             <input
                                 type="text"
                                 id="newJobNameInput"
-                                // ADDED Bootstrap class
                                 className="form-control" 
                                 value={newJobNameInput}
                                 onChange={(e) => setNewJobNameInput(e.target.value)}
@@ -508,12 +501,10 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                             ↩️ Cancel
                         </button>
                     </div>
-                    // END OF BOOTSTRAP CLASS CHANGES FOR NEW JOB VIEW
                 );
             }
 
             return (
-                // START OF BOOTSTRAP CLASS CHANGES FOR MAIN VIEW
                 <div className="container py-4"> 
                     <h1 className="text-primary">Field Job Tracker</h1>
 
@@ -524,7 +515,6 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                             id="job-select" 
                             value={currentJob.name} 
                             onChange={handleJobChange}
-                            // ADDED Bootstrap class
                             className="form-select" 
                         >
                             {allJobOptions.map((option, index) => (
@@ -558,7 +548,6 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                         }
                                     }}
                                     disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                                    // ADDED Bootstrap class
                                     className="form-select" 
                                 >
                                     {allManufacturers.map((m) => (
@@ -573,7 +562,6 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                     value={newProductModel}
                                     onChange={(e) => setNewProductModel(e.target.value)}
                                     disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                                    // ADDED Bootstrap class
                                     className="form-select" 
                                 >
                                     {availableModels.map((p) => (
@@ -593,14 +581,12 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                 placeholder="e.g., 200 or 12"
                                 min="1"
                                 disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                                // ADDED Bootstrap class
                                 className="form-control" 
                             />
                         </div>
 
-                        <button 
-                            // CHANGED to include Bootstrap classes
-                            className="add-product-btn btn btn-primary w-100" 
+                        <button 
+                            className="add-product-btn btn btn-primary w-100" 
                             onClick={handleAddProduct}
                             disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
                         >
@@ -608,11 +594,10 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                         </button>
                     </div>
 
-                  <ul className="list-group product-list">
+                    <ul className="list-group product-list">
                         {productsUsed.map((product) => (
                             <li 
                                 key={product.id} 
-                                // Cleaned up class names slightly, using 'py-2' for padding
                                 className="list-group-item d-flex justify-content-between align-items-center py-2"
                             > 
                                 <div className="product-item-details me-auto">
@@ -621,10 +606,8 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                     <small className="text-muted">{product.type} ({product.length})</small>
                                 </div>
                                 <button 
-                                    // Ensured quotes are correct for concatenation
                                     className="btn btn-sm btn-outline-danger ms-3" 
                                     onClick={() => handleRemoveProduct(product.id)}
-                                    // The custom '.remove-btn' CSS is now fully replaced by Bootstrap classes
                                 >
                                     &times; Remove
                                 </button>
@@ -632,7 +615,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                         ))}
                     </ul>
                     {productsUsed.length === 0 && currentJob.name !== STATIC_JOB_OPTIONS[0].name && (
-                         <p className="text-muted text-center mt-3">No products logged yet.</p>
+                           <p className="text-muted text-center mt-3">No products logged yet.</p>
                     )}
 
                     {/* --- HOURS TRACKING --- */}
@@ -648,8 +631,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                     onChange={(e) => setHoursLogged(e.target.value)}
                                     placeholder="e.g., 8.5"
                                     disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                                    // ADDED Bootstrap class
-                                    className="form-control" 
+                                    className="form-control"
                                 />
                             </div>
                             <div className="col-md-6 mb-3">
@@ -660,15 +642,13 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                                     value={sessionDate}
                                     onChange={(e) => setSessionDate(e.target.value)}
                                     disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                                    // ADDED Bootstrap class
-                                    className="form-control" 
+                                    className="form-control"
                                 />
                             </div>
                         </div>
 
-                        <button 
-                            // CHANGED to include Bootstrap classes
-                            className="log-hours-btn btn btn-success w-100 mt-2" 
+                        <button 
+                            className="log-hours-btn btn btn-success w-100 mb-3"
                             onClick={handleLogHours}
                             disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
                         >
@@ -676,71 +656,66 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                         </button>
 
                         <button
-                            // CHANGED to include Bootstrap classes
-                            className="add-photo-btn btn btn-warning mt-2"
+                            className="add-photo-btn btn btn-warning w-100"
                             onClick={handleAddPhotoLink}
                             disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
                         >
-                            📸 {photoLink ? 'Update Photo Link' : 'Add Photo Link'}
+                            📸 {photoLink ? 'EDIT PHOTO LINK' : 'ADD PHOTO LINK'}
                         </button>
-                        {photoLink && (
-                            <p className="text-muted mt-2 mb-0" style={{ fontSize: '0.9em' }}>
-                                Link saved: <a href={photoLink} target="_blank">{photoLink.substring(0, 30)}...</a>
-                            </p>
-                        )}
+                        {photoLink && <p className="text-truncate text-center text-muted mt-2">Link added: <a href={photoLink} target="_blank">View Link</a></p>}
                     </div>
-                    
-                    {/* --- SUMMARY --- */}
-                    <div className="summary-box alert alert-secondary">
-                        <h3 className="h5">Job Summary</h3>
-                        <p><strong>Total Hours:</strong> {loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2)} hrs</p>
-                        
-                        {loggedSessions.length === 0 ? (
-                            <p className="text-muted">No hours logged yet.</p>
-                        ) : (
-                            // ADDED Bootstrap list class
-                            <ul className="list-group session-list"> 
-                                {loggedSessions.map((session) => (
-                                     // ADDED Bootstrap list item class
-                                    <li key={session.id} className="list-group-item list-group-item-light"> 
-                                        {session.hours.toFixed(2)} hrs on <strong>{session.date}</strong>
-                                    </li>
-                                ))}
-                            </ul>
-                        )}
-                        
-                        <p className="mt-2"><strong>Unique Products Used:</strong> {productsUsed.length}</p>
-                    </div>
-                    
-                    {/* --- SAVE BUTTONS --- */}
-                    <div className="save-buttons-container">
-                        <button 
-                            // CHANGED to include Bootstrap classes
-                            className="save-progress-btn btn btn-info me-2" 
-                            onClick={handleSaveProgress}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            💾 SAVE PROGRESS
-                        </button>
-                        <button 
-                            // CHANGED to include Bootstrap classes
-                            className="finalize-btn btn btn-danger ms-2" 
-                            onClick={handleFinalizeAndSend}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            ✉️ FINALIZE & SEND REPORT
-                        </button>
-                    </div>
+
+                    <ul className="list-group session-list">
+                        {loggedSessions.map((session, index) => (
+                            <li 
+                                key={session.id || index} 
+                                className="list-group-item d-flex justify-content-between align-items-center py-2"
+                            >
+                                <span>
+                                    <strong>{session.hours.toFixed(2)} hrs</strong> on {session.date}
+                                </span>
+                            </li>
+                        ))}
+                    </ul>
+                    {loggedSessions.length === 0 && currentJob.name !== STATIC_JOB_OPTIONS[0].name && (
+                        <p className="text-muted text-center mt-3">No hours logged yet.</p>
+                    )}
+
+
+                    {/* --- SUMMARY & ACTIONS --- */}
+                    {currentJob.name !== STATIC_JOB_OPTIONS[0].name && (
+                        <>
+                            <h2>📝 Current Summary</h2>
+                            <div className="summary-box">
+                                <p><strong>Total Hours Logged:</strong> {loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2)} hrs</p>
+                                <p><strong>Products Count:</strong> {productsUsed.length}</p>
+                                <p><strong>Photo Link:</strong> {photoLink ? <a href={photoLink} target="_blank">View Link</a> : 'N/A'}</p>
+                            </div>
+
+                            <div className="save-buttons-container">
+                                <button
+                                    className="save-progress-btn btn btn-info me-2 mt-4"
+                                    onClick={handleSaveProgress}
+                                >
+                                    💾 Save Progress
+                                </button>
+                                <button
+                                    className="finalize-btn btn btn-danger mt-4"
+                                    onClick={handleFinalizeAndSend}
+                                >
+                                    🚀 Finalize & Send
+                                </button>
+                            </div>
+                        </>
+                    )}
 
                 </div>
-                 // END OF BOOTSTRAP CLASS CHANGES FOR MAIN VIEW
             );
-        }
+        };
 
-        ReactDOM.render(<JobTrackerApp />, document.getElementById('root'));
+        // Render the application
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<JobTrackerApp />);
     </script>
-
 </body>
 </html>
-
-
