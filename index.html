@@ -1,3 +1,7 @@
+// SECTION 0: REACT IMPORTS (MUST BE AT THE VERY TOP)
+const React = window.React;
+const ReactDOM = window.ReactDOM;
+
 // Utility to get today's date in YYYY-MM-DD format
 const getTodayDate = () => {
     const today = new Date();
@@ -142,7 +146,7 @@ const JobTrackerApp = () => {
     // --- FORM INPUT STATE ---
     const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
     const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
-    const [newProductQuantity, setNewProductQuantity] = React.useState(''); 
+    const [newProductQuantity, setNewProductQuantity] = React.useState(''); // Initialized to empty string for disabled check
     const [newProductUnit, setNewProductUnit] = React.useState('feet');
     const [hoursLogged, setHoursLogged] = React.useState('');
     const [newJobNameInput, setNewJobNameInput] = React.useState(''); 
@@ -217,7 +221,7 @@ const handleJobChange = (event) => {
         };
         setProductsUsed(prev => [...prev, newProduct]);
         
-        setNewProductQuantity(''); 
+        setNewProductQuantity(''); // Clear the input after successful addition
     };
 
     const handleRemoveProduct = (id) => {
@@ -256,7 +260,7 @@ const handleJobChange = (event) => {
         saveJobData(currentJob.name, productsUsed, loggedSessions, ''); 
         alert(`💾 Progress saved for ${currentJob.name}!`);
     };
-            // MODIFIED FINALIZATION FUNCTION (Uses mailto and sets cleanup state)
+         // MODIFIED FINALIZATION FUNCTION (Uses mailto and sets cleanup state)
     const handleFinalizeAndSend = () => {
         const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
         const currentTime = new Date().toLocaleString();
@@ -334,7 +338,7 @@ ${imageStatus}
     ];
     
     const allManufacturers = Array.from(new Set(STATIC_PRODUCTS.map(p => p.manufacturer)));
-    const availableModels = STATIC_PRODUCTS.filter(p => p.manufacturer === newProductManufacturer);
+    const availableModels = STATIC_PRODUCTS.filter(p => p.manufacturer === newProductManufacturer);  
             // RENDER LOGIC
     
     // 1. New Job Creation View
@@ -618,7 +622,7 @@ ${imageStatus}
         </div>
     );
 };
-            
-            
 
-
+// SECTION 7: RENDER CALL (MUST BE AT THE VERY BOTTOM)
+// Renders the component into the HTML element with id="root"
+ReactDOM.render(<JobTrackerApp />, document.getElementById('root'));
