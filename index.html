@@ -313,6 +313,7 @@
             { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
        );
        const JobTrackerApp = () => {
+          
             const [savedJobNames, setSavedJobNames] = React.useState(loadSavedJobNames);
             const initialJobName = STATIC_JOB_OPTIONS[0].name;
             
@@ -321,13 +322,14 @@
             const [productsUsed, setProductsUsed] = React.useState([]);
             
             const [loggedSessions, setLoggedSessions] = React.useState([]);
-            const [photoLink, setPhotoLink] = React.useState('');
+            // photoLink state is removed, only temporary file info is tracked
+            const [tempImageFile, setTempImageFile] = React.useState(null); 
 
             // --- FORM INPUT STATE ---
             const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
             const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
             const [newProductQuantity, setNewProductQuantity] = React.useState(''); 
-            const [newProductUnit, setNewProductUnit] = React.useState('feet'); // NEW STATE FOR UNIT
+            const [newProductUnit, setNewProductUnit] = React.useState('feet');
             const [hoursLogged, setHoursLogged] = React.useState('');
             const [newJobNameInput, setNewJobNameInput] = React.useState(''); 
             const [sessionDate, setSessionDate] = React.useState(getTodayDate()); 
@@ -335,25 +337,26 @@
             // Effect to load data when the job changes
             React.useEffect(() => {
                 if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
-                    const { products, sessions, photoLink } = loadJobData(currentJob.name);
+                    // Note: photoLink is no longer loaded or saved
+                    const { products, sessions } = loadJobData(currentJob.name);
                     setProductsUsed(products);
                     setLoggedSessions(sessions);
-                    setPhotoLink(photoLink);
+                    // Since we can't save the actual file or link, we only load products/sessions
                 } else {
                     setProductsUsed([]);
                     setLoggedSessions([]);
-                    setPhotoLink('');
                 }
             }, [currentJob.name]);
 
             // Save data automatically on state change
             React.useEffect(() => {
                 if (currentJob.name && currentJob.name !== STATIC_JOB_OPTIONS[0].name) {
-                    saveJobData(currentJob.name, productsUsed, loggedSessions, photoLink);
+                    // Only save products and sessions
+                    saveJobData(currentJob.name, productsUsed, loggedSessions, ''); // Pass empty string for link
                     saveNewJobName(currentJob.name);
                     setSavedJobNames(loadSavedJobNames());
                 }
-            }, [productsUsed, loggedSessions, photoLink, currentJob.name]); 
+            }, [productsUsed, loggedSessions, currentJob.name]); 
 
 
             const handleJobChange = (event) => {
@@ -397,12 +400,11 @@
                     product: productMatch.product,
                     length: productMatch.length,
                     quantity: quantity, 
-                    unit: newProductUnit, // Use the new state variable for unit 
+                    unit: newProductUnit, 
                 };
                 setProductsUsed(prev => [...prev, newProduct]);
                 
                 setNewProductQuantity(''); 
-                // We'll keep the newProductUnit state as it was for quick re-entry
         
             };
 
@@ -427,27 +429,39 @@
                 setHoursLogged('');
             };
 
-            const handleAddPhotoLink = () => {
-                const link = prompt("Enter photo album link (e.g., Google Photos, Dropbox):", photoLink);
-                if (link !== null) {
-                    setPhotoLink(link);
+            // Handle image capture from file input
+            const handleImageCapture = (event) => {
+                const file = event.target.files[0];
+                if (file) {
+                    setTempImageFile(file);
+                    alert(`Photo captured: ${file.name}. This filename will be included in your report.`);
+                    event.target.value = null; // Reset file input
                 }
             };
 
             const handleSaveProgress = () => {
-                saveJobData(currentJob.name, productsUsed, loggedSessions, photoLink);
+                // Save only products and sessions
+                saveJobData(currentJob.name, productsUsed, loggedSessions, ''); 
                 alert(`💾 Progress saved for ${currentJob.name}!`);
             };
 
             const handleFinalizeAndSend = () => {
                 const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
+                
+                let imageStatus = '';
+                if (tempImageFile) {
+                    imageStatus = `Photo Captured: ${tempImageFile.name} (File path not included in web report for security.)`;
+                } else {
+                    imageStatus = 'Photo: N/A';
+                }
+
                 const report = `
 Job Report for: ${currentJob.name}
 
 --- Summary ---
 Total Hours: ${totalHours} hrs
 Unique Products Used: ${productsUsed.length}
-Photo Link: ${photoLink || 'N/A'}
+${imageStatus}
 
 --- Products Used ---
 ${productsUsed.map(p => `- ${p.type}: ${p.manufacturer} ${p.product} (${p.quantity} ${p.unit})`).join('\n')}
@@ -460,10 +474,11 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                 alert("--- FINALIZE & SEND REPORT ---\n\n" + report);
 
                 // Clear data after finalizing
-                const confirmClear = confirm("Report contents copied. Do you want to CLEAR the job data (hours, products, link) for this job now?");
+                const confirmClear = confirm("Report contents copied. Do you want to CLEAR the job data (hours, products) for this job now?");
                 if (confirmClear) {
                     clearJobData(currentJob.name);
                     setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
+                    setTempImageFile(null); // Clear temporary file status
                     alert(`✅ Data for ${currentJob.name} has been cleared and the job has been reset.`);
                 }
             };
@@ -670,14 +685,32 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                             ➕ LOG HOURS
                         </button>
 
-                        <button
-                            className="add-photo-btn btn btn-warning w-100"
-                            onClick={handleAddPhotoLink}
-                            disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
-                        >
-                            📸 {photoLink ? 'EDIT PHOTO LINK' : 'ADD PHOTO LINK'}
-                        </button>
-                        {photoLink && <p className="text-truncate text-center text-muted mt-2">Link added: <a href={photoLink} target="_blank">View Link</a></p>}
+                        <div className="d-flex justify-content-center">
+                             {/* The hidden file input that triggers the camera/gallery */}
+                            <input
+                                type="file"
+                                id="photo-capture-input"
+                                accept="image/*"
+                                capture="camera" 
+                                style={{ display: 'none' }} 
+                                onChange={handleImageCapture}
+                            />
+                            {/* Button that visually triggers the hidden input */}
+                            <button
+                                className="add-photo-btn btn btn-warning w-100"
+                                onClick={() => document.getElementById('photo-capture-input').click()}
+                                disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                            >
+                                📸 {tempImageFile ? 'Retake/Select Photo' : 'Take/Select Photo'}
+                            </button>
+                        </div>
+                        
+                        <p className="text-truncate text-center text-muted mt-2">
+                            {tempImageFile 
+                                ? `Photo Captured: ${tempImageFile.name}`
+                                : `No photo captured yet.`
+                            }
+                        </p>
                     </div>
 
                     <ul className="list-group session-list">
@@ -704,7 +737,7 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                             <div className="summary-box">
                                 <p><strong>Total Hours Logged:</strong> {loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2)} hrs</p>
                                 <p><strong>Products Count:</strong> {productsUsed.length}</p>
-                                <p><strong>Photo Link:</strong> {photoLink ? <a href={photoLink} target="_blank">View Link</a> : 'N/A'}</p>
+                                <p><strong>Photo Status:</strong> {tempImageFile ? `File Captured` : `N/A`}</p>
                             </div>
 
                             <div className="save-buttons-container">
@@ -734,3 +767,4 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
     </script>
 </body>
 </html>
+            
