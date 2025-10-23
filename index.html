@@ -931,19 +931,23 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                         </button>
                     </div>
 
-                    <ul className="list-group product-list">
+                  <ul className="list-group product-list">
                         {productsUsed.map((product) => (
-                            // ADDED Bootstrap class
-                            <li key={product.id} className="list-group-item d-flex justify-content-between align-items-center"> 
-                                <div className="product-item-details">
+                            <li 
+                                key={product.id} 
+                                // Cleaned up class names slightly, using 'py-2' for padding
+                                className="list-group-item d-flex justify-content-between align-items-center py-2"
+                            > 
+                                <div className="product-item-details me-auto">
                                     <strong>{product.manufacturer} {product.product}</strong> ({product.quantity} {product.unit})
                                     <br/>
                                     <small className="text-muted">{product.type} ({product.length})</small>
                                 </div>
                                 <button 
-                                    // CHANGED to include Bootstrap classes
-                                    className="remove-btn btn btn-sm btn-outline-danger" 
+                                    // Ensured quotes are correct for concatenation
+                                    className="btn btn-sm btn-outline-danger ms-3" 
                                     onClick={() => handleRemoveProduct(product.id)}
+                                    // The custom '.remove-btn' CSS is now fully replaced by Bootstrap classes
                                 >
                                     &times; Remove
                                 </button>
@@ -1061,3 +1065,4 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
 
 </body>
 </html>
+
