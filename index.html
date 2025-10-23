@@ -240,6 +240,11 @@
                 const newSavedJobs = [...savedJobs, jobName].sort();
                 localStorage.setItem('savedJobs', JSON.stringify(newSavedJobs));
             }
+            const removeJobName = (jobName) => {
+    let savedNames = loadSavedJobNames();
+    const updatedNames = savedNames.filter(name => name !== jobName);
+    localStorage.setItem(JOB_NAMES_KEY, JSON.stringify(updatedNames));
+};
         };
         const STATIC_PRODUCTS = [
             // --- KAYCAN VINYL PRODUCTS ---
@@ -312,7 +317,8 @@
             { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
             { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
        );
-       const JobTrackerApp = () => {
+     
+           const JobTrackerApp = () => {
             const [savedJobNames, setSavedJobNames] = React.useState(loadSavedJobNames);
             const initialJobName = STATIC_JOB_OPTIONS[0].name;
             
@@ -331,8 +337,8 @@
             const [hoursLogged, setHoursLogged] = React.useState('');
             const [newJobNameInput, setNewJobNameInput] = React.useState(''); 
             const [sessionDate, setSessionDate] = React.useState(getTodayDate()); 
-            // NEW: Office Email State - REMINDER: Set your actual office email here!
-            const [officeEmail, setOfficeEmail] = React.useState('office@poechmansiding.com'); 
+            // VVVV Using a placeholder email address VVVV
+            const [officeEmail, setOfficeEmail] = React.useState('YOUR_OFFICE_EMAIL@yourdomain.com'); 
             
             // Effect to load data when the job changes
             React.useEffect(() => {
@@ -443,7 +449,7 @@
                 alert(`💾 Progress saved for ${currentJob.name}!`);
             };
 
-            // MODIFIED FUNCTION TO USE MAILTO
+            // MODIFIED FUNCTION TO USE MAILTO AND REMOVE JOB NAME
             const handleFinalizeAndSend = () => {
                 const totalHours = loggedSessions.reduce((sum, session) => sum + session.hours, 0).toFixed(2);
                 const currentTime = new Date().toLocaleString();
@@ -477,7 +483,7 @@ ${imageStatus}
                 const body = encodeURIComponent(reportBody);
 
                 if (!officeEmail || officeEmail === 'YOUR_OFFICE_EMAIL@yourdomain.com') {
-                    alert("Please enter a valid Office Email Address before finalizing.");
+                    alert("Please enter a valid Office Email Address before finalizing, or set the default in the code.");
                     return;
                 }
                 
@@ -486,15 +492,16 @@ ${imageStatus}
                 // Open the user's email client
                 window.location.href = mailtoLink;
 
-                // Prompt user to clear data after email client has been opened
-                // Use a short delay to give the browser time to open the mail client on some phones
+                // Prompt user to clear data AND remove job name
                 setTimeout(() => {
-                    const confirmClear = confirm("Email client opened with the report. Do you want to CLEAR the job data (hours, products) for this job now?");
+                    const confirmClear = confirm("Email client opened with the report. Do you want to CLEAR the job data (hours, products) AND REMOVE THIS JOB from the selection list now?");
                     if (confirmClear) {
                         clearJobData(currentJob.name);
+                        removeJobName(currentJob.name); // <--- NEW STEP: REMOVE JOB NAME
+                        setSavedJobNames(loadSavedJobNames()); // Refresh the job list
                         setCurrentJob({ name: STATIC_JOB_OPTIONS[0].name, isNew: false }); 
                         setTempImageFile(null);
-                        alert(`✅ Data for ${currentJob.name} has been cleared and the job has been reset.`);
+                        alert(`✅ Job ${currentJob.name} has been completed and removed from the list.`);
                     }
                 }, 500); 
             };
@@ -693,7 +700,7 @@ ${imageStatus}
                             </div>
                         </div>
                         
-                        {/* NEW OFFICE EMAIL INPUT */}
+                        {/* OFFICE EMAIL INPUT */}
                         <div className="form-group mb-3">
                             <label htmlFor="office-email-input" className="form-label">Office Report Email</label>
                             <input
@@ -802,4 +809,3 @@ ${imageStatus}
     </script>
 </body>
 </html>
-
