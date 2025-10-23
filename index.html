@@ -168,6 +168,13 @@
             flex: 1;
         }
         
+        /* --- NEW CSS ADDED HERE --- */
+        .quantity-group {
+            display: flex;
+            gap: 10px; /* Space between input and dropdown */
+        }
+        /* -------------------------- */
+        
         /* Mobile layout adjustment */
         @media (max-width: 450px) {
             .save-buttons-container {
@@ -305,11 +312,11 @@
             { id: 127, type: "Trim/Corner", manufacturer: "Mitten", product: "Rustic OSCP", length: "10 ft" },
             { id: 128, type: "Trim/J-Channel", manufacturer: "Mitten", product: "Rustic 5/8 v J", length: "10 ft" },
        );
-        const JobTrackerApp = () => {
+       const JobTrackerApp = () => {
             const [savedJobNames, setSavedJobNames] = React.useState(loadSavedJobNames);
             const initialJobName = STATIC_JOB_OPTIONS[0].name;
             
-            // --- CORE APP STATE (Crucially added for missing variables) ---
+            // --- CORE APP STATE ---
             const [currentJob, setCurrentJob] = React.useState({ name: initialJobName, isNew: false });
             const [productsUsed, setProductsUsed] = React.useState([]);
             
@@ -320,6 +327,7 @@
             const [newProductManufacturer, setNewProductManufacturer] = React.useState(STATIC_PRODUCTS[0].manufacturer);
             const [newProductModel, setNewProductModel] = React.useState(STATIC_PRODUCTS[0].product);
             const [newProductQuantity, setNewProductQuantity] = React.useState(''); 
+            const [newProductUnit, setNewProductUnit] = React.useState('feet'); // NEW STATE FOR UNIT
             const [hoursLogged, setHoursLogged] = React.useState('');
             const [newJobNameInput, setNewJobNameInput] = React.useState(''); 
             const [sessionDate, setSessionDate] = React.useState(getTodayDate()); 
@@ -382,14 +390,6 @@
                 const productMatch = STATIC_PRODUCTS.find(p => p.manufacturer === newProductManufacturer && p.product === newProductModel);
                 if (!productMatch) return; 
 
-                // Determine the unit based on the 'length' field
-                let unit = 'pieces'; 
-                if (productMatch.length.toLowerCase().includes('ft') || productMatch.length.toLowerCase().includes('feet')) {
-                    unit = 'feet';
-                } else if (productMatch.length.toLowerCase() === 'n/a') {
-                    unit = 'pieces'; 
-                }
-
                 const newProduct = {
                     id: Date.now(),
                     type: productMatch.type,
@@ -397,11 +397,12 @@
                     product: productMatch.product,
                     length: productMatch.length,
                     quantity: quantity, 
-                    unit: unit,       
+                    unit: newProductUnit, // Use the new state variable for unit 
                 };
                 setProductsUsed(prev => [...prev, newProduct]);
                 
                 setNewProductQuantity(''); 
+                // We'll keep the newProductUnit state as it was for quick re-entry
         
             };
 
@@ -571,19 +572,33 @@ ${loggedSessions.map(s => `- ${s.hours.toFixed(2)} hrs on ${s.date}`).join('\n')
                             </div>
                         </div>
 
-                        <div className="form-group mb-3">
-                            <label htmlFor="product-quantity-input" className="form-label">Quantity Used (Feet, Pieces, etc.)</label>
+                        {/* --- MODIFIED QUANTITY AND UNIT INPUT HERE --- */}
+                        <label htmlFor="product-quantity-input" className="form-label">Quantity Used</label>
+                        <div className="quantity-group mb-3">
                             <input
                                 id="product-quantity-input"
                                 type="number"
                                 value={newProductQuantity}
                                 onChange={(e) => setNewProductQuantity(e.target.value)}
-                                placeholder="e.g., 200 or 12"
+                                placeholder="Qty"
                                 min="1"
                                 disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
                                 className="form-control" 
+                                style={{ flex: '1 1 50%' }}
                             />
+                             <select
+                                id="product-unit-select"
+                                value={newProductUnit}
+                                onChange={(e) => setNewProductUnit(e.target.value)}
+                                disabled={currentJob.name === STATIC_JOB_OPTIONS[0].name}
+                                className="form-select"
+                                style={{ flex: '1 1 50%' }}
+                            >
+                                <option value="feet">Feet (ft)</option>
+                                <option value="pieces">Pieces</option>
+                            </select>
                         </div>
+                        {/* ------------------------------------------- */}
 
                         <button 
                             className="add-product-btn btn btn-primary w-100" 
